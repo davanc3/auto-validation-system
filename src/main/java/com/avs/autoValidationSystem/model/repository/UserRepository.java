@@ -1,6 +1,6 @@
-package com.avs.autoValidationSystem.repository;
+package com.avs.autoValidationSystem.model.repository;
 
-import com.avs.autoValidationSystem.entity.User;
+import com.avs.autoValidationSystem.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

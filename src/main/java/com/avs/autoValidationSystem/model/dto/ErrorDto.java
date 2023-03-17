@@ -1,4 +1,4 @@
-package com.avs.autoValidationSystem.dto;
+package com.avs.autoValidationSystem.model.dto;
 
 import org.springframework.http.HttpStatus;
 

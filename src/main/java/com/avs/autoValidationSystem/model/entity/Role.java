@@ -1,4 +1,4 @@
-package com.avs.autoValidationSystem.entity;
+package com.avs.autoValidationSystem.model.entity;
 
 import lombok.Data;
 import lombok.ToString;

@@ -1,12 +1,10 @@
 package com.avs.autoValidationSystem.controller;
 
+import com.avs.autoValidationSystem.model.service.AuthService;
 import com.avs.autoValidationSystem.security.jwt.JwtRequest;
 import com.avs.autoValidationSystem.security.jwt.JwtResponse;
 import com.avs.autoValidationSystem.security.jwt.RefreshJwtRequest;
-import com.avs.autoValidationSystem.service.AuthService;
-import com.avs.autoValidationSystem.dto.RegistrationDto;
-import com.avs.autoValidationSystem.exceptions.user.EmailIsBusyException;
-import com.avs.autoValidationSystem.exceptions.user.LoginIsBusyException;
+import com.avs.autoValidationSystem.model.dto.RegistrationDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +24,7 @@ public class AuthenticationController {
     public AuthenticationController(AuthService authService) {
         this.authService = authService;
     }
+
     @PostMapping("login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest authRequest) throws AuthException {
         final JwtResponse token = authService.login(authRequest);
@@ -41,9 +40,12 @@ public class AuthenticationController {
         final JwtResponse token = authService.refresh(request.getRefreshToken());
         return ResponseEntity.ok(token);
     }
-    @PostMapping("registration")
-    public ResponseEntity<String> registration(@Valid @RequestBody RegistrationDto registrationDto) throws LoginIsBusyException, EmailIsBusyException {
-        authService.register(registrationDto);
-        return ResponseEntity.ok("User created");
-    }
+
+    //todo: в данной версии программы пока не нужна регистрация, но так как в дальнейшем она может понадобиться,
+    // то функционал пока не удаляется
+//    @PostMapping("registration")
+//    public ResponseEntity<String> registration(@Valid @RequestBody RegistrationDto registrationDto) {
+//        authService.register(registrationDto);
+//        return ResponseEntity.ok("User created");
+//    }
 }

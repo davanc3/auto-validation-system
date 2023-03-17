@@ -1,4 +1,4 @@
-package com.avs.autoValidationSystem.dto;
+package com.avs.autoValidationSystem.model.dto;
 
 import lombok.Data;
 
