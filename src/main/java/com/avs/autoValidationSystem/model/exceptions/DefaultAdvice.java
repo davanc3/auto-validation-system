@@ -1,6 +1,6 @@
-package com.avs.autoValidationSystem.exceptions;
+package com.avs.autoValidationSystem.model.exceptions;
 
-import com.avs.autoValidationSystem.dto.ErrorDto;
+import com.avs.autoValidationSystem.model.dto.ErrorDto;
 import com.avs.autoValidationSystem.exceptions.user.EmailIsBusyException;
 import com.avs.autoValidationSystem.exceptions.user.LoginIsBusyException;
 import org.springframework.http.HttpHeaders;

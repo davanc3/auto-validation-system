@@ -1,8 +1,8 @@
-package com.avs.autoValidationSystem.service;
+package com.avs.autoValidationSystem.model.service.impl;
 
-import com.avs.autoValidationSystem.entity.User;
-import com.avs.autoValidationSystem.repository.RoleRepository;
-import com.avs.autoValidationSystem.repository.UserRepository;
+import com.avs.autoValidationSystem.model.entity.User;
+import com.avs.autoValidationSystem.model.repository.UserRepository;
+import com.avs.autoValidationSystem.model.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +11,11 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class UserService {
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
     }
     public Optional<User> findById(Long id){
         return userRepository.findById(id);

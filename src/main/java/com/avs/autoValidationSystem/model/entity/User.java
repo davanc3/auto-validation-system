@@ -1,4 +1,4 @@
-package com.avs.autoValidationSystem.entity;
+package com.avs.autoValidationSystem.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

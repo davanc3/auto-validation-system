@@ -1,7 +1,7 @@
 package com.avs.autoValidationSystem.security.jwt;
 
-import com.avs.autoValidationSystem.entity.Role;
-import com.avs.autoValidationSystem.repository.RoleRepository;
+import com.avs.autoValidationSystem.model.entity.Role;
+import com.avs.autoValidationSystem.model.repository.RoleRepository;
 import io.jsonwebtoken.Claims;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

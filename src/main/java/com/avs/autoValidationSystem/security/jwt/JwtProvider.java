@@ -1,6 +1,6 @@
 package com.avs.autoValidationSystem.security.jwt;
 
-import com.avs.autoValidationSystem.entity.Role;
+import com.avs.autoValidationSystem.model.entity.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

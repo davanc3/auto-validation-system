@@ -1,7 +1,7 @@
 package com.avs.autoValidationSystem.security.jwt;
 
 
-import com.avs.autoValidationSystem.entity.Role;
+import com.avs.autoValidationSystem.model.entity.Role;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.Authentication;

@@ -1,8 +1,10 @@
-package com.avs.autoValidationSystem.service;
+package com.avs.autoValidationSystem.model.service.impl;
 
-import com.avs.autoValidationSystem.entity.User;
-import com.avs.autoValidationSystem.repository.RoleRepository;
-import com.avs.autoValidationSystem.repository.UserRepository;
+import com.avs.autoValidationSystem.model.entity.User;
+import com.avs.autoValidationSystem.model.repository.RoleRepository;
+import com.avs.autoValidationSystem.model.repository.UserRepository;
+import com.avs.autoValidationSystem.model.service.AuthService;
+import com.avs.autoValidationSystem.model.service.UserService;
 import com.avs.autoValidationSystem.security.jwt.JwtAuthentication;
 import com.avs.autoValidationSystem.security.jwt.JwtRequest;
 import com.avs.autoValidationSystem.security.jwt.JwtResponse;
@@ -18,7 +20,7 @@ import java.util.*;
 
 @Service
 @Slf4j
-public class AuthService {
+public class AuthServiceImpl implements AuthService {
     private final UserService userService;
     // Todo убрать мапу (возможно на базуданных или redis)
     private final Map<String, String> refreshStorage = new HashMap<>();
@@ -27,7 +29,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
-    public AuthService(UserService userService, JwtProvider jwtProvider, RoleRepository roleRepository, ModelMapper modelMapper, UserRepository userRepository) {
+    public AuthServiceImpl(UserService userService, JwtProvider jwtProvider, RoleRepository roleRepository, ModelMapper modelMapper, UserRepository userRepository) {
         this.userService = userService;
         this.jwtProvider = jwtProvider;
         this.roleRepository = roleRepository;
@@ -43,6 +45,7 @@ public class AuthService {
      * @return JwtResponse
      * @throws AuthException пользователь не найден или неправильный пароль
      */
+    @Override
     public JwtResponse login(JwtRequest authRequest) throws AuthException {
         final User user = userService.findByLogin(authRequest.getLogin())
                 .orElseThrow(() -> new AuthException("Пользователь не найден"));
@@ -56,14 +59,14 @@ public class AuthService {
         }
     }
 
-    /**
-     * Создание пользователя и добавление его базу данных.
-     * Роль по умолчанию ставится ROLE_USER.
-     * Время ставиться текущие через класс Date().
-     * Производится проверка не занят логин и почта.
-     * @param registrationDto register Dto
-     * @return вернет созданого пользователя
-     */
+//    /**
+//     * Создание пользователя и добавление его базу данных.
+//     * Роль по умолчанию ставится ROLE_USER.
+//     * Время ставиться текущие через класс Date().
+//     * Производится проверка не занят логин и почта.
+//     * @param registrationDto register Dto
+//     * @return вернет созданого пользователя
+//     */
     //todo: посмотреть проблему
 //    public User register(RegistrationDto registrationDto) throws LoginIsBusyException, EmailIsBusyException {
 //        if (userService.findFirstByLogin(registrationDto.getLogin()) != null) {
@@ -92,6 +95,7 @@ public class AuthService {
      * @return JwtResponse
      * @throws AuthException пользователь не найден
      */
+    @Override
     public JwtResponse getAccessToken(String refreshToken) throws AuthException {
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
@@ -114,6 +118,7 @@ public class AuthService {
      * @return новый access и refresh token
      * @throws AuthException Пльзователь не найден
      */
+    @Override
     public JwtResponse refresh(String refreshToken) throws AuthException {
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
@@ -135,6 +140,7 @@ public class AuthService {
      * Все идентифицированые пользователи
      * @return все идентифицированые пользователи
      */
+    @Override
     public JwtAuthentication getAuthInfo() {
         return (JwtAuthentication) SecurityContextHolder.getContext().getAuthentication();
     }
