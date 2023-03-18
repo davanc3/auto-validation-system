@@ -1,5 +1,7 @@
 package com.avs.autoValidationSystem.model.service.impl;
 
+import com.avs.autoValidationSystem.model.dto.RegistrationDto;
+import com.avs.autoValidationSystem.model.entity.Role;
 import com.avs.autoValidationSystem.model.entity.User;
 import com.avs.autoValidationSystem.model.repository.RoleRepository;
 import com.avs.autoValidationSystem.model.repository.UserRepository;
@@ -59,32 +61,26 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
-//    /**
-//     * Создание пользователя и добавление его базу данных.
-//     * Роль по умолчанию ставится ROLE_USER.
-//     * Время ставиться текущие через класс Date().
-//     * Производится проверка не занят логин и почта.
-//     * @param registrationDto register Dto
-//     * @return вернет созданого пользователя
-//     */
+    /**
+     * Создание пользователя и добавление его базу данных.
+     * Роль по умолчанию ставится ROLE_USER.
+     * Время ставиться текущие через класс Date().
+     * Производится проверка не занят логин и почта.
+     * @param registrationDto register Dto
+     * @return вернет созданого пользователя
+     */
     //todo: посмотреть проблему
-//    public User register(RegistrationDto registrationDto) throws LoginIsBusyException, EmailIsBusyException {
-//        if (userService.findFirstByLogin(registrationDto.getLogin()) != null) {
-//            throw new LoginIsBusyException();
-//        }
-//        if (userService.findFirstByEmail(registrationDto.getEmail()) != null)
-//            throw new EmailIsBusyException();
-//        User user = modelMapper.map(registrationDto, User.class);
-//        Role roleUser = roleRepository.findByName("ROLE_USER");
-//        List<Role> userRoles = new ArrayList<>();
-//        userRoles.add(roleUser);
-//        user.setRoles(userRoles);
-//        user.setStatus(Status.NOT_ACTIVE);
-//        user.setDateRegistration(new Date());
-//        User userEntity = userRepository.save(user);
-//        log.info("IN register - user: {} успешно зарегестрирован",userEntity);
-//        return userEntity;
-//    }
+    public User register(RegistrationDto registrationDto) {
+        User user = modelMapper.map(registrationDto, User.class);
+        Role roleUser = roleRepository.findByName("ROLE_USER");
+        List<Role> userRoles = new ArrayList<>();
+        userRoles.add(roleUser);
+        user.setRoles(userRoles);
+        User userEntity = userRepository.save(user);
+        log.info("IN register - user: {} успешно зарегестрирован",userEntity);
+        return userEntity;
+    }
+
     /**
      * Принимает refresh токен, а возвращает новый access токен.
      * Сначала мы проверяем, что присланный rehresh токен валиден.

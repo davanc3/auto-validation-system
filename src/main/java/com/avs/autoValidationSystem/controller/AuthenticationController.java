@@ -41,11 +41,9 @@ public class AuthenticationController {
         return ResponseEntity.ok(token);
     }
 
-    //todo: в данной версии программы пока не нужна регистрация, но так как в дальнейшем она может понадобиться,
-    // то функционал пока не удаляется
-//    @PostMapping("registration")
-//    public ResponseEntity<String> registration(@Valid @RequestBody RegistrationDto registrationDto) {
-//        authService.register(registrationDto);
-//        return ResponseEntity.ok("User created");
-//    }
+    @PostMapping("registration")
+    public ResponseEntity<String> registration(@Valid @RequestBody RegistrationDto registrationDto) {
+        authService.register(registrationDto);
+        return ResponseEntity.ok("User created");
+    }
 }

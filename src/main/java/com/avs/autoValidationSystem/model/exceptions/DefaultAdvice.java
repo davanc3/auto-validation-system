@@ -1,8 +1,6 @@
 package com.avs.autoValidationSystem.model.exceptions;
 
 import com.avs.autoValidationSystem.model.dto.ErrorDto;
-import com.avs.autoValidationSystem.exceptions.user.EmailIsBusyException;
-import com.avs.autoValidationSystem.exceptions.user.LoginIsBusyException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +36,7 @@ public class DefaultAdvice extends ResponseEntityExceptionHandler {
             String message = error.getDefaultMessage();
             errors.put(fieldName, message);
         });
-        return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
     @Override
     protected ResponseEntity<Object> handleMissingPathVariable(MissingPathVariableException ex, HttpHeaders headers,
