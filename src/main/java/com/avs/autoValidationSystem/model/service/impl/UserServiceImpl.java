@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    public Optional<User> findById(Long id){
-        return userRepository.findById(id);
+    public User findById(Long id){
+        return userRepository.findFirstById(id);
     }
     public User findFirstByLogin(String login){
         return userRepository.findFirstByLogin(login);
