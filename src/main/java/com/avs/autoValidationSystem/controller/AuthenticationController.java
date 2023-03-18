@@ -18,7 +18,7 @@ import javax.security.auth.message.AuthException;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "auth")
+@RequestMapping(value = "/api/v1/auth")
 @Slf4j
 public class AuthenticationController {
     private final AuthService authService;
