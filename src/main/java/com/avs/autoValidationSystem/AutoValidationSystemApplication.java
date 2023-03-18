@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ShepApplication {
+public class AutoValidationSystemApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(ShepApplication.class, args);
+		SpringApplication.run(AutoValidationSystemApplication.class, args);
 	}
 }

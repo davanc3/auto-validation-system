@@ -20,7 +20,7 @@ import java.util.Map;
 public class DefaultAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AuthException.class)
     public ResponseEntity<ErrorDto> handleException (AuthException e){
-        ErrorDto error = new ErrorDto(HttpStatus.FORBIDDEN,e.getMessage());
+        ErrorDto error = new ErrorDto(HttpStatus.UNAUTHORIZED,e.getMessage());
         return new ResponseEntity<>(error,error.getHttpStatus());
     }
     @Override

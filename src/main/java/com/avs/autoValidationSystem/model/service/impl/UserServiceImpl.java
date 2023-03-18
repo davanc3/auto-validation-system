@@ -23,9 +23,6 @@ public class UserServiceImpl implements UserService {
     public User findFirstByLogin(String login){
         return userRepository.findFirstByLogin(login);
     }
-    public User findFirstByEmail(String email){
-        return userRepository.findFirstByEmail(email);
-    }
     public Optional<User> findByLogin(String login){
         return userRepository.findByLogin(login);
     }

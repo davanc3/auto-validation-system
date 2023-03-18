@@ -1,7 +1,5 @@
 package com.avs.autoValidationSystem.security.jwt;
 
-
-import com.avs.autoValidationSystem.model.entity.Role;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.Authentication;
@@ -18,7 +16,7 @@ public class JwtAuthentication implements Authentication {
 
     private boolean authenticated;
     private String username;
-    private List<Role> roles;
+    private List<String> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -50,10 +48,9 @@ public class JwtAuthentication implements Authentication {
         this.authenticated = isAuthenticated;
     }
 
-    private static List<GrantedAuthority> mapToGrantedAuthorities(List<Role> userRoles) {
+    private static List<GrantedAuthority> mapToGrantedAuthorities(List<String> userRoles) {
         return userRoles.stream()
-                .map(role ->
-                        new SimpleGrantedAuthority(role.getName())
+                .map(SimpleGrantedAuthority::new
                 ).collect(Collectors.toList());
     }
 

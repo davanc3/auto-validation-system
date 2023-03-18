@@ -1,11 +1,13 @@
 package com.avs.autoValidationSystem.controller;
 
+import com.avs.autoValidationSystem.model.entity.User;
 import com.avs.autoValidationSystem.model.service.AuthService;
 import com.avs.autoValidationSystem.security.jwt.JwtRequest;
 import com.avs.autoValidationSystem.security.jwt.JwtResponse;
 import com.avs.autoValidationSystem.security.jwt.RefreshJwtRequest;
 import com.avs.autoValidationSystem.model.dto.RegistrationDto;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +22,11 @@ import javax.validation.Valid;
 @Slf4j
 public class AuthenticationController {
     private final AuthService authService;
+    private final ModelMapper modelMapper;
 
-    public AuthenticationController(AuthService authService) {
+    public AuthenticationController(AuthService authService, ModelMapper modelMapper) {
         this.authService = authService;
+        this.modelMapper = modelMapper;
     }
 
     @PostMapping("login")
@@ -43,7 +47,7 @@ public class AuthenticationController {
 
     @PostMapping("registration")
     public ResponseEntity<String> registration(@Valid @RequestBody RegistrationDto registrationDto) {
-        authService.register(registrationDto);
+        authService.register(modelMapper.map(registrationDto, User.class));
         return ResponseEntity.ok("User created");
     }
 }

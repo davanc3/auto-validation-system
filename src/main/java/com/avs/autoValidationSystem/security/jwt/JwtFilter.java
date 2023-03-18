@@ -1,11 +1,10 @@
 package com.avs.autoValidationSystem.security.jwt;
 
-import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.util.StringUtils;
-import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -13,11 +12,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 
-
-@Component
 @Slf4j
-public class JwtFilter extends GenericFilterBean {
+
+public class JwtFilter extends FilterChainProxy {
 
     private static final String AUTHORIZATION = "Authorization";
 
@@ -32,7 +31,9 @@ public class JwtFilter extends GenericFilterBean {
         final String token = getTokenFromRequest((HttpServletRequest) servletRequest);
         if (token != null && jwtProvider.validateAccessToken(token)) {
             final Claims claims = jwtProvider.getAccessClaims(token);
-            final JwtAuthentication jwtInfoToken = JwtUtils.generate(claims);
+            final JwtAuthentication jwtInfoToken = new JwtAuthentication();
+            jwtInfoToken.setRoles((List<String>)claims.get("roles"));
+            jwtInfoToken.setUsername(claims.getSubject());
             jwtInfoToken.setAuthenticated(true);
             SecurityContextHolder.getContext().setAuthentication(jwtInfoToken);
         }
