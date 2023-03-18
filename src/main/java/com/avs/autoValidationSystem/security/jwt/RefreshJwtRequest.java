@@ -1,6 +1,5 @@
 package com.avs.autoValidationSystem.security.jwt;
 
-
 import lombok.Getter;
 import lombok.Setter;
 

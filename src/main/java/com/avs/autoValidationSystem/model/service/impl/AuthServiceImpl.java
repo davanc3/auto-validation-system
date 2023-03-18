@@ -1,5 +1,7 @@
 package com.avs.autoValidationSystem.model.service.impl;
 
+import com.avs.autoValidationSystem.model.dto.RegistrationDto;
+import com.avs.autoValidationSystem.model.entity.Role;
 import com.avs.autoValidationSystem.model.entity.User;
 import com.avs.autoValidationSystem.model.repository.RoleRepository;
 import com.avs.autoValidationSystem.model.repository.UserRepository;
@@ -13,6 +15,7 @@ import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.message.AuthException;
@@ -27,14 +30,14 @@ public class AuthServiceImpl implements AuthService {
     private final JwtProvider jwtProvider;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthServiceImpl(UserService userService, JwtProvider jwtProvider, RoleRepository roleRepository, ModelMapper modelMapper, UserRepository userRepository) {
+    public AuthServiceImpl(UserService userService, JwtProvider jwtProvider, RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.jwtProvider = jwtProvider;
         this.roleRepository = roleRepository;
-        this.modelMapper = modelMapper;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -49,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
     public JwtResponse login(JwtRequest authRequest) throws AuthException {
         final User user = userService.findByLogin(authRequest.getLogin())
                 .orElseThrow(() -> new AuthException("Пользователь не найден"));
-        if (user.getPassword().equals(authRequest.getPassword())) {
+        if (passwordEncoder.matches(authRequest.getPassword(), user.getPassword())) {
             final String accessToken = jwtProvider.createToken(user.getLogin(), user.getRoles());
             final String refreshToken = jwtProvider.createRefreshToken(user.getLogin());
             refreshStorage.put(user.getLogin(), refreshToken);
@@ -59,32 +62,25 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
-//    /**
-//     * Создание пользователя и добавление его базу данных.
-//     * Роль по умолчанию ставится ROLE_USER.
-//     * Время ставиться текущие через класс Date().
-//     * Производится проверка не занят логин и почта.
-//     * @param registrationDto register Dto
-//     * @return вернет созданого пользователя
-//     */
-    //todo: посмотреть проблему
-//    public User register(RegistrationDto registrationDto) throws LoginIsBusyException, EmailIsBusyException {
-//        if (userService.findFirstByLogin(registrationDto.getLogin()) != null) {
-//            throw new LoginIsBusyException();
-//        }
-//        if (userService.findFirstByEmail(registrationDto.getEmail()) != null)
-//            throw new EmailIsBusyException();
-//        User user = modelMapper.map(registrationDto, User.class);
-//        Role roleUser = roleRepository.findByName("ROLE_USER");
-//        List<Role> userRoles = new ArrayList<>();
-//        userRoles.add(roleUser);
-//        user.setRoles(userRoles);
-//        user.setStatus(Status.NOT_ACTIVE);
-//        user.setDateRegistration(new Date());
-//        User userEntity = userRepository.save(user);
-//        log.info("IN register - user: {} успешно зарегестрирован",userEntity);
-//        return userEntity;
-//    }
+    /**
+     * Создание пользователя и добавление его базу данных.
+     * Роль по умолчанию ставится ROLE_USER.
+     * Время ставиться текущие через класс Date().
+     * Производится проверка не занят логин и почта.
+     *
+     * @param user объект пользователя
+     * @return вернет созданого пользователя
+     */
+    public User register(User user) {
+        Role roleUser = roleRepository.findByName("ROLE_USER");
+        List<Role> userRoles = new ArrayList<>();
+        userRoles.add(roleUser);
+        user.setRoles(userRoles);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        return userRepository.save(user);
+    }
+
     /**
      * Принимает refresh токен, а возвращает новый access токен.
      * Сначала мы проверяем, что присланный rehresh токен валиден.

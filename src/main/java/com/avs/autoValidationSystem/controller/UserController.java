@@ -3,7 +3,6 @@ package com.avs.autoValidationSystem.controller;
 import com.avs.autoValidationSystem.model.entity.User;
 import com.avs.autoValidationSystem.model.service.UserService;
 import com.avs.autoValidationSystem.security.jwt.JwtProvider;
-import com.avs.autoValidationSystem.model.service.impl.UserServiceImpl;
 import com.avs.autoValidationSystem.model.dto.RegistrationDto;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -28,8 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RegistrationDto> getOne(@PathVariable("id") Long id){
-        Optional<User> userEntity = userService.findById(id);
-        return ResponseEntity.ok(modelMapper.map(userEntity.get(), RegistrationDto.class));
+    public ResponseEntity<RegistrationDto> getUserByID(@PathVariable("id") Long id){
+        return ResponseEntity.ok(modelMapper.map(userService.findById(id), RegistrationDto.class));
     }
 }

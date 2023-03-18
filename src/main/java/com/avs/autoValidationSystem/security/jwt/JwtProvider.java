@@ -29,12 +29,13 @@ public class JwtProvider {
     @Value("${jwt.token.expiredRefreshToken}")
     private long validityRefreshTokenInDay;
 
-
     public JwtProvider(
             @Value("${jwt.secret.access}") String jwtAccessSecret,
-            @Value("${jwt.secret.refresh}") String jwtRefreshSecret) {
+            @Value("${jwt.secret.refresh}") String jwtRefreshSecret
+    ) {
         this.jwtAccessSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtAccessSecret));
         this.jwtRefreshSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtRefreshSecret));
+
     }
 
     public String createToken(String username, List<Role> roles){
@@ -67,25 +68,20 @@ public class JwtProvider {
     public boolean validateRefreshToken(String refreshToken) {
         return validateToken(refreshToken, jwtRefreshSecret);
     }
+
+    public String getNameByToken(String accessToken){
+        if(validateAccessToken(accessToken)){
+            return getAccessClaims(accessToken).getSubject();
+        }
+        return null;
+    }
     private boolean validateToken(String token, Key secret) {
-        try {
             Jwts.parserBuilder()
                     .setSigningKey(secret)
                     .build()
                     .parseClaimsJws(token);
             return true;
-        } catch (ExpiredJwtException expEx) {
-            log.error("Token expired", expEx);
-        } catch (UnsupportedJwtException unsEx) {
-            log.error("Unsupported jwt", unsEx);
-        } catch (MalformedJwtException mjEx) {
-            log.error("Malformed jwt", mjEx);
-        } catch (SignatureException sEx) {
-            log.error("Invalid signature", sEx);
-        } catch (Exception e) {
-            log.error("invalid token", e);
-        }
-        return false;
+
     }
     public Claims getAccessClaims(String token) {
         return getClaims(token, jwtAccessSecret);
