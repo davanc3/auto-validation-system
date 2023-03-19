@@ -9,10 +9,7 @@ import com.avs.autoValidationSystem.model.dto.RegistrationDto;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.message.AuthException;
 import javax.validation.Valid;
@@ -31,6 +28,7 @@ public class AuthenticationController {
 
     @PostMapping("login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest authRequest) throws AuthException {
+        System.out.println(authRequest.toString());
         final JwtResponse token = authService.login(authRequest);
         return ResponseEntity.ok(token);
     }
