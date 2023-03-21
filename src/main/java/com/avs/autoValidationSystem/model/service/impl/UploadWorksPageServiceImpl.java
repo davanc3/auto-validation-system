@@ -1,6 +1,6 @@
 package com.avs.autoValidationSystem.model.service.impl;
 
-import com.avs.autoValidationSystem.model.entity.Group;
+import com.avs.autoValidationSystem.model.entity.StudyGroup;
 import com.avs.autoValidationSystem.model.repository.ControlWorkRepository;
 import com.avs.autoValidationSystem.model.repository.GroupRepository;
 import com.avs.autoValidationSystem.model.repository.OptionRepository;
@@ -41,7 +41,7 @@ public class UploadWorksPageServiceImpl implements UploadWorksService {
 //    }
 
     @Override
-    public Set<Group> getAllGroups() {
-        return new HashSet<>(groupRepository.findAll(Sort.by("name")));
+    public List<StudyGroup> getAllGroups() {
+        return groupRepository.findAll(Sort.by("name"));
     }
 }

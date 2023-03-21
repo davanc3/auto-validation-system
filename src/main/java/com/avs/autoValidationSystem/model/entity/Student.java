@@ -27,7 +27,7 @@ public class Student {
 
     @ManyToOne
     @JoinColumn(name = "group_id")
-    private Group group;
+    private StudyGroup studyGroup;
 
     @ManyToMany(mappedBy = "students")
     @JsonIgnore

@@ -1,12 +1,13 @@
 package com.avs.autoValidationSystem.controller;
 
-import com.avs.autoValidationSystem.model.entity.Group;
+import com.avs.autoValidationSystem.model.entity.StudyGroup;
 import com.avs.autoValidationSystem.model.service.UploadWorksService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -19,9 +20,9 @@ public class UploadWorksPageController {
     }
 
     @GetMapping("/groups")
-    @PreAuthorize("ROLE_USER")
-    public Set<Group> getAllGroups()
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public String[] getAllGroups()
     {
-        return uploadWorksService.getAllGroups();
+        return uploadWorksService.getAllGroups().stream().map(StudyGroup::getName).toArray(String[]::new);
     }
 }

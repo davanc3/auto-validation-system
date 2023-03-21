@@ -34,7 +34,7 @@ public class ControlWork {
     @JoinTable(name = "work_to_group",
             joinColumns = {@JoinColumn(name = "control_work_id")},
             inverseJoinColumns = {@JoinColumn(name = "group_id")})
-    private List<Group> groups = new ArrayList<>();
+    private List<StudyGroup> studyGroups = new ArrayList<>();
 
     public ControlWork() {
     }

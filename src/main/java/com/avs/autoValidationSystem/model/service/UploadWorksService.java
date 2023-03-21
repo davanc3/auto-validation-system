@@ -1,9 +1,9 @@
 package com.avs.autoValidationSystem.model.service;
 
-import com.avs.autoValidationSystem.model.entity.Group;
+import com.avs.autoValidationSystem.model.entity.StudyGroup;
 
-import java.util.Set;
+import java.util.List;
 
 public interface UploadWorksService {
-    Set<Group> getAllGroups();
+    List<StudyGroup> getAllGroups();
 }
