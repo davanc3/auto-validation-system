@@ -65,12 +65,13 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests(
-                        authz -> authz.antMatchers(
+                        authz -> authz
+                                .antMatchers(
+                                        "/api/v1/**",
                                         "/auth/login",
                                         "/auth/token",
                                         "/auth/registration").permitAll()
                                 .antMatchers("/user/all").hasRole("ADMIN")
-                                .antMatchers("/api/v1").permitAll()
                                 .anyRequest().authenticated()
                                 .and()
                                 .addFilterAfter(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
