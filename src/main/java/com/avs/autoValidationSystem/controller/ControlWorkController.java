@@ -3,6 +3,7 @@ package com.avs.autoValidationSystem.controller;
 import com.avs.autoValidationSystem.model.dto.uploadlWorksPage.StudentsFilterDto;
 import com.avs.autoValidationSystem.model.entity.ControlWork;
 import com.avs.autoValidationSystem.model.service.ControlWorkService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ public class ControlWorkController {
     }
 
     @GetMapping("")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Set<ControlWork> getControlWorksByFilter(StudentsFilterDto filterDto) {
         return controlWorkService.getControlWorksByFilter(filterDto);
     }
