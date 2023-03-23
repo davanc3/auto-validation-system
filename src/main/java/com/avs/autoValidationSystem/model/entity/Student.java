@@ -26,7 +26,7 @@ public class Student {
     private String lastName;
 
     @ManyToOne
-    @JoinColumn(name = "group_id")
+    @JoinColumn(name = "study_group_id")
     private StudyGroup studyGroup;
 
     @ManyToMany(mappedBy = "students")

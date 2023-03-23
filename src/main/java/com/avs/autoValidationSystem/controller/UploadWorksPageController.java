@@ -1,5 +1,7 @@
 package com.avs.autoValidationSystem.controller;
 
+import com.avs.autoValidationSystem.model.dto.uploadlWorksPage.StudentsFilterDto;
+import com.avs.autoValidationSystem.model.entity.Student;
 import com.avs.autoValidationSystem.model.entity.StudyGroup;
 import com.avs.autoValidationSystem.model.service.UploadWorksService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,5 +26,11 @@ public class UploadWorksPageController {
     public String[] getAllGroups()
     {
         return uploadWorksService.getAllGroups().stream().map(StudyGroup::getName).toArray(String[]::new);
+    }
+
+    @GetMapping("/students")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public Set<Student> getStudentsByFilter(StudentsFilterDto filterDto) {
+        return uploadWorksService.getStudentsByFilter(filterDto);
     }
 }

@@ -22,6 +22,7 @@ public class ControlWork {
     @JoinTable(name = "student_to_work",
             joinColumns = {@JoinColumn(name = "control_work_id")},
             inverseJoinColumns = {@JoinColumn(name = "student_id")})
+    @OrderBy("lastName asc")
     private List<Student> students = new ArrayList<>();
 
     @ManyToMany

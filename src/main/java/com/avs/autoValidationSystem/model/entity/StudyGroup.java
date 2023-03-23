@@ -22,6 +22,7 @@ public class StudyGroup {
 
     @OneToMany(mappedBy = "studyGroup")
     @JsonIgnore
+    @OrderBy("lastName asc")
     private List<Student> students;
 
     @ManyToMany(mappedBy = "studyGroups")
