@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "group")
+@Table(name = "study_group")
 @Data
-public class Group {
+public class StudyGroup {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,14 +20,15 @@ public class Group {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "studyGroup")
     @JsonIgnore
+    @OrderBy("lastName asc")
     private List<Student> students;
 
-    @ManyToMany(mappedBy = "groups")
+    @ManyToMany(mappedBy = "studyGroups")
     @JsonIgnore
     private List<ControlWork> controlWorks = new ArrayList<>();
 
-    public Group() {
+    public StudyGroup() {
     }
 }

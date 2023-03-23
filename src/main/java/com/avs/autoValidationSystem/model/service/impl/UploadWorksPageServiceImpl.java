@@ -1,6 +1,9 @@
 package com.avs.autoValidationSystem.model.service.impl;
 
-import com.avs.autoValidationSystem.model.entity.Group;
+import com.avs.autoValidationSystem.model.dto.uploadlWorksPage.StudentsFilterDto;
+import com.avs.autoValidationSystem.model.entity.ControlWork;
+import com.avs.autoValidationSystem.model.entity.Student;
+import com.avs.autoValidationSystem.model.entity.StudyGroup;
 import com.avs.autoValidationSystem.model.repository.ControlWorkRepository;
 import com.avs.autoValidationSystem.model.repository.GroupRepository;
 import com.avs.autoValidationSystem.model.repository.OptionRepository;
@@ -41,7 +44,30 @@ public class UploadWorksPageServiceImpl implements UploadWorksService {
 //    }
 
     @Override
-    public Set<Group> getAllGroups() {
-        return new HashSet<>(groupRepository.findAll(Sort.by("name")));
+    public List<StudyGroup> getAllGroups() {
+        return groupRepository.findAll(Sort.by("name"));
+    }
+
+    @Override
+    public Set<Student> getStudentsByFilter(StudentsFilterDto filterDto) {
+        Set<Student> students = new HashSet<>();
+
+        if (filterDto.getGroup() != null) {
+            StudyGroup studyGroup = groupRepository.findFirstByName(filterDto.getGroup());
+
+            if (studyGroup != null) {
+                students.addAll(studyGroup.getStudents());
+            }
+        }
+
+        if (filterDto.getWork() != null) {
+            ControlWork controlWork = controlWorkRepository.findFirstByName(filterDto.getWork());
+
+            if (controlWork != null) {
+                students.addAll(controlWork.getStudents());
+            }
+        }
+
+        return students;
     }
 }
