@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "option")
+@Table(name = "control_option")
 @Data
 public class Option {
     @Id
@@ -15,7 +15,7 @@ public class Option {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "option")
+    @Column(name = "control_option")
     private int option;
 
     @ManyToMany(mappedBy = "options")
