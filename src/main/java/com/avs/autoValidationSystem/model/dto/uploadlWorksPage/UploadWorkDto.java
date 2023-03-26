@@ -1,0 +1,15 @@
+package com.avs.autoValidationSystem.model.dto.uploadlWorksPage;
+
+import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
+
+@Data
+public class UploadWorkDto {
+    private String student;
+    private String work;
+    private int option;
+    private MultipartFile[] files;
+
+    public UploadWorkDto() {
+    }
+}
