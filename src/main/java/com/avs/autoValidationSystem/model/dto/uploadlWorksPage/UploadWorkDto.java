@@ -5,11 +5,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class UploadWorkDto {
+    private String group;
     private String student;
     private String work;
     private int option;
     private MultipartFile[] files;
-
     public UploadWorkDto() {
     }
 }
