@@ -2,13 +2,15 @@ package com.avs.autoValidationSystem.model.service.impl;
 
 import com.avs.autoValidationSystem.model.dto.uploadlWorksPage.UploadWorkDto;
 import com.avs.autoValidationSystem.model.service.UploadFileService;
+
+import com.avs.autoValidationSystem.model.utils.Transliterator;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.nio.file.Files;
 
 
 @Service
@@ -18,21 +20,18 @@ public class UploadFileImpl implements UploadFileService {
     @Value("${path.workUploadFile}")
     private String rootPath;
 
-    public UploadFileImpl(){
-    }
     //todo доделать добавление в бд
     @Override
-    public void saveFiles(UploadWorkDto uploadWorkDto) throws IOException {
+    public void saveFiles(UploadWorkDto uploadWorkDto) throws IOException{
         String directorySaveFiles = rootPath +
                 "/" + uploadWorkDto.getGroup() +
                 "/" + uploadWorkDto.getWork() +
                 "/" + uploadWorkDto.getStudent();
-        if(!new File(directorySaveFiles).exists()) {
-            new File(directorySaveFiles).mkdir();
-        }
+        String directorySaveFilesLatin = Transliterator.convertCyrToLat(directorySaveFiles);
+        new File(directorySaveFilesLatin).mkdirs();
         MultipartFile[] files = uploadWorkDto.getFiles();
         for (MultipartFile multipartFile : files){
-            File convFile = new File(directorySaveFiles+"/"+ multipartFile.getOriginalFilename());
+            File convFile = new File(directorySaveFilesLatin+"/"+ multipartFile.getOriginalFilename());
             multipartFile.transferTo(convFile);
         }
     }
