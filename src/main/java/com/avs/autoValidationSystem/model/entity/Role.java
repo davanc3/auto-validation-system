@@ -1,5 +1,6 @@
 package com.avs.autoValidationSystem.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
 
@@ -14,11 +15,13 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @JsonIgnore
     private Long id;
     @Column(name = "name")
     private String name;
     @ManyToMany(mappedBy = "roles")
     @ToString.Exclude
+    @JsonIgnore
     private List<User> users;
 
 }
