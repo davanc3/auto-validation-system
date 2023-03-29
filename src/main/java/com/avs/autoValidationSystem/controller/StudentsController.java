@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -21,7 +22,13 @@ public class StudentsController {
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public Set<Student> getStudentsByFilter(StudentsFilterDto filterDto) {
+    public List<Student> getStudentsByFilter(StudentsFilterDto filterDto) {
         return studentsService.getStudentsByFilter(filterDto);
+    }
+
+    @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    public List<Student> getAllStudents() {
+        return studentsService.getAllStudents();
     }
 }

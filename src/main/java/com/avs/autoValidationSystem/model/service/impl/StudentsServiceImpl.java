@@ -6,25 +6,29 @@ import com.avs.autoValidationSystem.model.entity.Student;
 import com.avs.autoValidationSystem.model.entity.StudyGroup;
 import com.avs.autoValidationSystem.model.repository.ControlWorkRepository;
 import com.avs.autoValidationSystem.model.repository.GroupRepository;
+import com.avs.autoValidationSystem.model.repository.StudentRepository;
 import com.avs.autoValidationSystem.model.service.StudentsService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class StudentsServiceImpl implements StudentsService {
     private final GroupRepository groupRepository;
     private final ControlWorkRepository controlWorkRepository;
+    private final StudentRepository studentRepository;
 
-    public StudentsServiceImpl(GroupRepository groupRepository, ControlWorkRepository controlWorkRepository) {
+    public StudentsServiceImpl(GroupRepository groupRepository, ControlWorkRepository controlWorkRepository, StudentRepository studentRepository) {
         this.groupRepository = groupRepository;
         this.controlWorkRepository = controlWorkRepository;
+        this.studentRepository = studentRepository;
     }
 
     @Override
-    public Set<Student> getStudentsByFilter(StudentsFilterDto filterDto) {
-        Set<Student> students = new HashSet<>();
+    public List<Student> getStudentsByFilter(StudentsFilterDto filterDto) {
+        List<Student> students = new ArrayList<>();
 
         if (filterDto.getGroup() != null) {
             StudyGroup studyGroup = groupRepository.findFirstByName(filterDto.getGroup());
@@ -43,5 +47,10 @@ public class StudentsServiceImpl implements StudentsService {
         }
 
         return students;
+    }
+
+    @Override
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll(Sort.by("lastName"));
     }
 }
