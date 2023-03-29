@@ -33,7 +33,7 @@ public class FilesController {
     }
 
     @GetMapping("/archive")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Resource> downloadArchiveByGroup(ArchiveFilterDto archiveFilterDto) throws IOException {
         ResponseEntity<Resource> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
