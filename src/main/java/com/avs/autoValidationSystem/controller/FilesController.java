@@ -43,10 +43,10 @@ public class FilesController {
             File archive = new File(archivePath);
             Resource resource = new FileSystemResource(archive);
 
-            response = ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+            response = ResponseEntity.ok().header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,"*").header(HttpHeaders.CONTENT_DISPOSITION,
                     "attachment; filename=\"" + archive.getName() + "\"") .contentType(MediaType.parseMediaType("application/zip"))
                     .body(resource);
-        }
+        }gi
 
         return response;
     }
