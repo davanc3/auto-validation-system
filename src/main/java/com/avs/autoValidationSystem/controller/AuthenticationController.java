@@ -47,4 +47,10 @@ public class AuthenticationController {
         authService.register(modelMapper.map(registrationDto, User.class));
         return ResponseEntity.ok("User created");
     }
+
+    @PostMapping("registration/admin")
+    public ResponseEntity<String> registrationAdmin(@Valid @RequestBody RegistrationDto registrationDto) {
+        authService.registerAdmin(modelMapper.map(registrationDto, User.class));
+        return ResponseEntity.ok("User created");
+    }
 }

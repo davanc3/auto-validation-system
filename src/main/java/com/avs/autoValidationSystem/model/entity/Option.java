@@ -21,6 +21,9 @@ public class Option {
     @ManyToMany(mappedBy = "options")
     private List<ControlWork> controlWorks = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "options")
+    private List<Task> tasks = new ArrayList<>();
+
     public Option() {
     }
 }
