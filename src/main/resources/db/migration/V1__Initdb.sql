@@ -1,7 +1,7 @@
 CREATE TABLE `control_option` (
-    `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
-    `control_option` INT(10) NULL DEFAULT NULL,
-    PRIMARY KEY (`id`) USING BTREE
+                                  `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
+                                  `control_option` INT(10) NULL DEFAULT NULL,
+                                  PRIMARY KEY (`id`) USING BTREE
 )
     COLLATE='utf8mb4_unicode_ci'
     ENGINE=InnoDB
@@ -13,9 +13,9 @@ INSERT INTO `control_option` (`id`, `control_option`) VALUES (2, 2);
 INSERT INTO `control_option` (`id`, `control_option`) VALUES (3, 3);
 
 CREATE TABLE `control_work` (
-    `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(25) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-    PRIMARY KEY (`id`) USING BTREE
+                                `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
+                                `name` VARCHAR(25) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+                                PRIMARY KEY (`id`) USING BTREE
 )
     COLLATE='utf8mb4_unicode_ci'
     ENGINE=InnoDB
@@ -25,14 +25,14 @@ CREATE TABLE `control_work` (
 INSERT INTO `control_work` (`id`, `name`) VALUES (4, 'Контрольная работа № 1');
 
 CREATE TABLE `option_to_work` (
-    `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
-    `control_work_id` BIGINT(19) NOT NULL,
-    `option_id` BIGINT(19) NOT NULL,
-    PRIMARY KEY (`id`) USING BTREE,
-    INDEX `FK__control_work` (`control_work_id`) USING BTREE,
-    INDEX `FK1cwkdsfjwakuqmtg6bxkih2ql` (`option_id`) USING BTREE,
-    CONSTRAINT `FK1cwkdsfjwakuqmtg6bxkih2ql` FOREIGN KEY (`option_id`) REFERENCES `control_option` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
-    CONSTRAINT `FK__control_work` FOREIGN KEY (`control_work_id`) REFERENCES `control_work` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+                                  `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
+                                  `control_work_id` BIGINT(19) NOT NULL,
+                                  `option_id` BIGINT(19) NOT NULL,
+                                  PRIMARY KEY (`id`) USING BTREE,
+                                  INDEX `FK__control_work` (`control_work_id`) USING BTREE,
+                                  INDEX `FK1cwkdsfjwakuqmtg6bxkih2ql` (`option_id`) USING BTREE,
+                                  CONSTRAINT `FK1cwkdsfjwakuqmtg6bxkih2ql` FOREIGN KEY (`option_id`) REFERENCES `control_option` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+                                  CONSTRAINT `FK__control_work` FOREIGN KEY (`control_work_id`) REFERENCES `control_work` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 )
     COLLATE='utf8mb4_unicode_ci'
     ENGINE=InnoDB
@@ -42,9 +42,9 @@ INSERT INTO `option_to_work` (`id`, `control_work_id`, `option_id`) VALUES (1, 4
 INSERT INTO `option_to_work` (`id`, `control_work_id`, `option_id`) VALUES (2, 4, 2);
 
 CREATE TABLE `role` (
-    `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-    PRIMARY KEY (`id`) USING BTREE
+                        `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
+                        `name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+                        PRIMARY KEY (`id`) USING BTREE
 )
     COLLATE='utf8mb4_unicode_ci'
     ENGINE=InnoDB
@@ -55,9 +55,9 @@ INSERT INTO `role` (`id`, `name`) VALUES (1, 'ROLE_USER');
 INSERT INTO `role` (`id`, `name`) VALUES (2, 'ROLE_ADMIN');
 
 CREATE TABLE `study_group` (
-    `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(15) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-    PRIMARY KEY (`id`) USING BTREE
+                               `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
+                               `name` VARCHAR(15) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+                               PRIMARY KEY (`id`) USING BTREE
 )
     COLLATE='utf8mb4_unicode_ci'
     ENGINE=InnoDB
@@ -67,14 +67,14 @@ CREATE TABLE `study_group` (
 INSERT INTO `study_group` (`id`, `name`) VALUES (1, 'ПИН-13');
 
 CREATE TABLE `student` (
-    `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(30) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-    `surname` VARCHAR(30) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-    `last_name` VARCHAR(30) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-    `study_group_id` BIGINT(19) NULL DEFAULT NULL,
-    PRIMARY KEY (`id`) USING BTREE,
-    INDEX `FK_student_group` (`study_group_id`) USING BTREE,
-    CONSTRAINT `FK_student_group` FOREIGN KEY (`study_group_id`) REFERENCES `study_group` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+                           `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
+                           `name` VARCHAR(30) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+                           `surname` VARCHAR(30) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+                           `last_name` VARCHAR(30) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+                           `study_group_id` BIGINT(19) NULL DEFAULT NULL,
+                           PRIMARY KEY (`id`) USING BTREE,
+                           INDEX `FK_student_group` (`study_group_id`) USING BTREE,
+                           CONSTRAINT `FK_student_group` FOREIGN KEY (`study_group_id`) REFERENCES `study_group` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 )
     COLLATE='utf8mb4_unicode_ci'
     ENGINE=InnoDB
@@ -112,18 +112,18 @@ INSERT INTO `student` (`id`, `name`, `surname`, `last_name`, `study_group_id`) V
 INSERT INTO `student` (`id`, `name`, `surname`, `last_name`, `study_group_id`) VALUES (29, 'Евгений', 'Андреевич', 'Федотов', 1);
 
 CREATE TABLE `student_to_work` (
-    `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
-    `student_id` BIGINT(19) NOT NULL,
-    `control_work_id` BIGINT(19) NOT NULL,
-    `control_option_id` BIGINT(19) NOT NULL,
-    `upload_path` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-    PRIMARY KEY (`id`) USING BTREE,
-    INDEX `FK_student_to_work_student123` (`student_id`) USING BTREE,
-    INDEX `FK_student_to_work_control_work` (`control_work_id`) USING BTREE,
-    INDEX `FK_student_to_work_control_option` (`control_option_id`) USING BTREE,
-    CONSTRAINT `FK_student_to_work_control_option` FOREIGN KEY (`control_option_id`) REFERENCES `control_option` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
-    CONSTRAINT `FK_student_to_work_control_work` FOREIGN KEY (`control_work_id`) REFERENCES `control_work` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
-    CONSTRAINT `FK_student_to_work_student123` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+                                   `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
+                                   `student_id` BIGINT(19) NOT NULL,
+                                   `control_work_id` BIGINT(19) NOT NULL,
+                                   `control_option_id` BIGINT(19) NOT NULL,
+                                   `upload_path` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+                                   PRIMARY KEY (`id`) USING BTREE,
+                                   INDEX `FK_student_to_work_student123` (`student_id`) USING BTREE,
+                                   INDEX `FK_student_to_work_control_work` (`control_work_id`) USING BTREE,
+                                   INDEX `FK_student_to_work_control_option` (`control_option_id`) USING BTREE,
+                                   CONSTRAINT `FK_student_to_work_control_option` FOREIGN KEY (`control_option_id`) REFERENCES `control_option` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+                                   CONSTRAINT `FK_student_to_work_control_work` FOREIGN KEY (`control_work_id`) REFERENCES `control_work` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+                                   CONSTRAINT `FK_student_to_work_student123` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 )
     COLLATE='utf8mb4_unicode_ci'
     ENGINE=InnoDB
@@ -131,9 +131,9 @@ CREATE TABLE `student_to_work` (
 ;
 
 CREATE TABLE `task` (
-    `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-    PRIMARY KEY (`id`) USING BTREE
+                        `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
+                        `name` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+                        PRIMARY KEY (`id`) USING BTREE
 )
     COLLATE='utf8mb4_unicode_ci'
     ENGINE=InnoDB
@@ -142,14 +142,14 @@ CREATE TABLE `task` (
 INSERT INTO `task` (`id`, `name`) VALUES (1, 'Задание 1');
 
 CREATE TABLE `task_to_option` (
-    `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
-    `option_id` BIGINT(19) NOT NULL,
-    `task_id` BIGINT(19) NOT NULL,
-    PRIMARY KEY (`id`) USING BTREE,
-    INDEX `FK__control_option` (`option_id`) USING BTREE,
-    INDEX `FK__task` (`task_id`) USING BTREE,
-    CONSTRAINT `FK__control_option` FOREIGN KEY (`option_id`) REFERENCES `control_option` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
-    CONSTRAINT `FK__task` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+                                  `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
+                                  `option_id` BIGINT(19) NOT NULL,
+                                  `task_id` BIGINT(19) NOT NULL,
+                                  PRIMARY KEY (`id`) USING BTREE,
+                                  INDEX `FK__control_option` (`option_id`) USING BTREE,
+                                  INDEX `FK__task` (`task_id`) USING BTREE,
+                                  CONSTRAINT `FK__control_option` FOREIGN KEY (`option_id`) REFERENCES `control_option` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+                                  CONSTRAINT `FK__task` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 )
     COLLATE='utf8mb4_unicode_ci'
     ENGINE=InnoDB
@@ -159,10 +159,10 @@ INSERT INTO `task_to_option` (`id`, `option_id`, `task_id`) VALUES (1, 1, 1);
 INSERT INTO `task_to_option` (`id`, `option_id`, `task_id`) VALUES (2, 2, 1);
 
 CREATE TABLE `user` (
-    `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
-    `login` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-    `password` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-    PRIMARY KEY (`id`) USING BTREE
+                        `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
+                        `login` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+                        `password` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+                        PRIMARY KEY (`id`) USING BTREE
 )
     COLLATE='utf8mb4_unicode_ci'
     ENGINE=InnoDB
@@ -170,26 +170,26 @@ CREATE TABLE `user` (
 ;
 
 CREATE TABLE `users_roles` (
-    `user_id` BIGINT(19) NOT NULL,
-    `role_id` BIGINT(19) NOT NULL,
-    INDEX `FKt4v0rrweyk393bdgt107vdx0x` (`role_id`) USING BTREE,
-    INDEX `FKgd3iendaoyh04b95ykqise6qh` (`user_id`) USING BTREE,
-    CONSTRAINT `FKgd3iendaoyh04b95ykqise6qh` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
-    CONSTRAINT `FKt4v0rrweyk393bdgt107vdx0x` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+                               `user_id` BIGINT(19) NOT NULL,
+                               `role_id` BIGINT(19) NOT NULL,
+                               INDEX `FKt4v0rrweyk393bdgt107vdx0x` (`role_id`) USING BTREE,
+                               INDEX `FKgd3iendaoyh04b95ykqise6qh` (`user_id`) USING BTREE,
+                               CONSTRAINT `FKgd3iendaoyh04b95ykqise6qh` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+                               CONSTRAINT `FKt4v0rrweyk393bdgt107vdx0x` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 )
     COLLATE='utf8mb4_unicode_ci'
     ENGINE=InnoDB
 ;
 
 CREATE TABLE `work_to_group` (
-    `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
-    `control_work_id` BIGINT(19) NOT NULL,
-    `group_id` BIGINT(19) NOT NULL,
-    PRIMARY KEY (`id`) USING BTREE,
-    INDEX `FK__control_work1` (`control_work_id`) USING BTREE,
-    INDEX `FK__group` (`group_id`) USING BTREE,
-    CONSTRAINT `FK__control_work1` FOREIGN KEY (`control_work_id`) REFERENCES `control_work` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
-    CONSTRAINT `FK__group` FOREIGN KEY (`group_id`) REFERENCES `study_group` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+                                 `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
+                                 `control_work_id` BIGINT(19) NOT NULL,
+                                 `group_id` BIGINT(19) NOT NULL,
+                                 PRIMARY KEY (`id`) USING BTREE,
+                                 INDEX `FK__control_work1` (`control_work_id`) USING BTREE,
+                                 INDEX `FK__group` (`group_id`) USING BTREE,
+                                 CONSTRAINT `FK__control_work1` FOREIGN KEY (`control_work_id`) REFERENCES `control_work` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+                                 CONSTRAINT `FK__group` FOREIGN KEY (`group_id`) REFERENCES `study_group` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 )
     COLLATE='utf8mb4_unicode_ci'
     ENGINE=InnoDB
