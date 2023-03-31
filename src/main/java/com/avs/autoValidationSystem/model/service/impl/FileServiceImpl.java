@@ -100,8 +100,10 @@ public class FileServiceImpl implements FileService {
             List<StudentToWork> studentToWorks = studentToWorkRepository.findAllByStudents(studyGroup.getStudents());
 
             archivePath = Translator.convertCyrToLat(filterDto.getGroup()) + "_" +
-                    OffsetDateTime.now() + ".tar.gz";
+                    OffsetDateTime.now().toString().replaceAll(":", "\\.")  + ".tar.gz";
+
             ArchiveCreator.createArchiveToGroup(archivePath, studentToWorks, filterDto.getGroup());
+
 
         } else if (filterDto.getStudent() != null) {
             String[] studentFio = filterDto.getStudent().split(" ");
@@ -114,7 +116,7 @@ public class FileServiceImpl implements FileService {
             List<StudentToWork> studentToWorks = studentToWorkRepository.findAllByStudents(students);
 
             archivePath = Translator.convertCyrToLat(filterDto.getStudent()) + "_" +
-                    OffsetDateTime.now() + ".tar.gz";
+                    OffsetDateTime.now().toString().replaceAll(":", "\\.") + ".tar.gz";
             ArchiveCreator.createArchiveToStudent(archivePath, studentToWorks);
         }
 
