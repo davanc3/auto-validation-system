@@ -1,6 +1,7 @@
 package com.avs.autoValidationSystem.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
 import lombok.ToString;
 
@@ -23,5 +24,10 @@ public class Role {
     @ToString.Exclude
     @JsonIgnore
     private List<User> users;
+
+    @JsonValue
+    public String getName(){
+        return name;
+    }
 
 }
