@@ -9,16 +9,16 @@ import com.avs.autoValidationSystem.model.service.OptionsService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class OptionsServiceImpl implements OptionsService {
     private final ControlWorkRepository controlWorkRepository;
+    private final OptionRepository optionRepository;
 
-    public OptionsServiceImpl(ControlWorkRepository controlWorkRepository) {
+    public OptionsServiceImpl(ControlWorkRepository controlWorkRepository, OptionRepository optionRepository) {
         this.controlWorkRepository = controlWorkRepository;
+        this.optionRepository = optionRepository;
     }
 
     @Override
@@ -33,5 +33,9 @@ public class OptionsServiceImpl implements OptionsService {
         }
 
         return options;
+    }
+
+    public Option getOptionByOption(int option) {
+        return optionRepository.findFirstByOption(option);
     }
 }
