@@ -1,10 +1,13 @@
 package com.avs.autoValidationSystem.security.jwt;
 
 import com.avs.autoValidationSystem.model.entity.Role;
+import com.avs.autoValidationSystem.model.entity.User;
+import com.avs.autoValidationSystem.model.service.UserService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +24,8 @@ import java.util.List;
 @Slf4j
 public class JwtProvider {
 
+    private final UserService userService;
+
     private SecretKey jwtAccessSecret;
     private SecretKey jwtRefreshSecret;
     @Value("${jwt.token.expiredToken}")
@@ -31,11 +36,12 @@ public class JwtProvider {
 
     public JwtProvider(
             @Value("${jwt.secret.access}") String jwtAccessSecret,
-            @Value("${jwt.secret.refresh}") String jwtRefreshSecret
-    ) {
+            @Value("${jwt.secret.refresh}") String jwtRefreshSecret,
+            UserService userService) {
         this.jwtAccessSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtAccessSecret));
         this.jwtRefreshSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtRefreshSecret));
 
+        this.userService = userService;
     }
 
     public String createToken(String username, List<Role> roles){
@@ -74,6 +80,17 @@ public class JwtProvider {
             return getAccessClaims(accessToken).getSubject();
         }
         return null;
+    }
+
+    /**
+     * Получени entity из токена проверенных токенов.
+     * @param token токен. Имеено токен без барьера
+     * @return entity user
+     */
+    public User getUserByToken(String token){
+        if (token == null) throw new NullPointerException();
+        Claims claims = getAccessClaims(token);
+        return userService.findFirstByLogin(claims.getSubject());
     }
     private boolean validateToken(String token, Key secret) {
             Jwts.parserBuilder()
