@@ -8,4 +8,5 @@ import java.util.Set;
 
 public interface OptionsService {
     List<Option> getOptionsByFilter(OptionsFilterDto filterDto);
+    Option getOptionByOption(int option);
 }
