@@ -1,5 +1,6 @@
 package com.avs.autoValidationSystem.controller;
 
+import com.avs.autoValidationSystem.model.entity.Role;
 import com.avs.autoValidationSystem.model.entity.User;
 import com.avs.autoValidationSystem.model.service.UserService;
 import com.avs.autoValidationSystem.security.jwt.JwtProvider;
@@ -7,8 +8,10 @@ import com.avs.autoValidationSystem.model.dto.RegistrationDto;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -27,7 +30,13 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<RegistrationDto> getUserByID(@PathVariable("id") Long id){
         return ResponseEntity.ok(modelMapper.map(userService.findById(id), RegistrationDto.class));
+    }
+    @GetMapping("/role")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<Role>> getRole(@RequestHeader (name="Authorization") String token){
+        return ResponseEntity.ok(jwtProvider.getUserByToken(token.split(" ")[1]).getRoles());
     }
 }
