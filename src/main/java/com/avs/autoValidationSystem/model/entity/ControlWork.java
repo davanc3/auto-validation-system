@@ -1,5 +1,6 @@
 package com.avs.autoValidationSystem.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -40,6 +41,11 @@ public class ControlWork {
             inverseJoinColumns = {@JoinColumn(name = "group_id")})
     @JsonIgnore
     private List<StudyGroup> studyGroups = new ArrayList<>();
+
+    @JsonValue
+    public String getName(){
+        return name;
+    }
 
     public ControlWork() {
     }

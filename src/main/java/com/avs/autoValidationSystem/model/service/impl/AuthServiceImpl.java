@@ -56,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
             final String accessToken = jwtProvider.createToken(user.getLogin(), user.getRoles());
             final String refreshToken = jwtProvider.createRefreshToken(user.getLogin());
             refreshStorage.put(user.getLogin(), refreshToken);
-            return new JwtResponse(accessToken, refreshToken, user.getRoles());
+            return new JwtResponse(accessToken, refreshToken);
         } else {
             throw new AuthException("Неправильный пароль");
         }
@@ -101,10 +101,10 @@ public class AuthServiceImpl implements AuthService {
                 final User user = userService.findByLogin(login)
                         .orElseThrow(() -> new AuthException("Пользователь не найден"));
                 final String accessToken = jwtProvider.createToken(user.getLogin(),user.getRoles());
-                return new JwtResponse(accessToken, null, user.getRoles());
+                return new JwtResponse(accessToken, null);
             }
         }
-        return new JwtResponse(null, null,null);
+        return new JwtResponse(null, null);
     }
 
     /**
@@ -126,7 +126,7 @@ public class AuthServiceImpl implements AuthService {
                 final String accessToken = jwtProvider.createToken(user.getLogin(),user.getRoles());
                 final String newRefreshToken = jwtProvider.createRefreshToken(user.getLogin());
                 refreshStorage.put(user.getLogin(), newRefreshToken);
-                return new JwtResponse(accessToken, newRefreshToken, user.getRoles());
+                return new JwtResponse(accessToken, newRefreshToken);
             }
         }
         throw new AuthException("Невалидный JWT токен");
