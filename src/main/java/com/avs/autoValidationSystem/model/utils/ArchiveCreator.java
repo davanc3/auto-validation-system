@@ -3,9 +3,7 @@ package com.avs.autoValidationSystem.model.utils;
 import com.avs.autoValidationSystem.model.entity.Student;
 import com.avs.autoValidationSystem.model.entity.StudentToWork;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -72,14 +70,22 @@ public class ArchiveCreator {
         zos.putNextEntry(ze);
 
         // Читаем файл и записываем его содержимое в архив
-        FileInputStream fis = new FileInputStream(filePath);
-        int len;
-        while ((len = fis.read(buffer)) > 0) {
-            zos.write(buffer, 0, len);
-        }
-        fis.close();
 
-        // Закрываем элемент архива
-        zos.closeEntry();
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(filePath);
+            int len;
+            while ((len = fis.read(buffer)) > 0) {
+                zos.write(buffer, 0, len);
+            }
+            fis.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            // Закрываем элемент архива
+            zos.closeEntry();
+        }
+
+
     }
 }
