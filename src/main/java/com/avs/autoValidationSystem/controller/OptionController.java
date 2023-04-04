@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -21,7 +22,7 @@ public class OptionController {
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public Set<Option> getOptionsByFilter(OptionsFilterDto filterDto) {
+    public List<Option> getOptionsByFilter(OptionsFilterDto filterDto) {
         return optionsService.getOptionsByFilter(filterDto);
     }
 }

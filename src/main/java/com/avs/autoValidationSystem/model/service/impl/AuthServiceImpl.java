@@ -82,6 +82,25 @@ public class AuthServiceImpl implements AuthService {
     }
 
     /**
+     * Создание пользователя и добавление его базу данных.
+     * Роль по умолчанию ставится ROLE_USER.
+     * Время ставиться текущие через класс Date().
+     * Производится проверка не занят логин и почта.
+     *
+     * @param user объект пользователя
+     * @return вернет созданого пользователя
+     */
+    public User registerAdmin(User user) {
+        Role roleUser = roleRepository.findByName("ROLE_ADMIN");
+        List<Role> userRoles = new ArrayList<>();
+        userRoles.add(roleUser);
+        user.setRoles(userRoles);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        return userRepository.save(user);
+    }
+
+    /**
      * Принимает refresh токен, а возвращает новый access токен.
      * Сначала мы проверяем, что присланный rehresh токен валиден.
      * Если валиден, то получаем claims и оттуда получаем логин пользователя.

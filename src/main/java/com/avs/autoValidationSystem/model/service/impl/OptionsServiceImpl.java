@@ -8,7 +8,9 @@ import com.avs.autoValidationSystem.model.repository.OptionRepository;
 import com.avs.autoValidationSystem.model.service.OptionsService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -20,8 +22,8 @@ public class OptionsServiceImpl implements OptionsService {
     }
 
     @Override
-    public Set<Option> getOptionsByFilter(OptionsFilterDto filterDto) {
-        Set<Option> options = new HashSet<>();
+    public List<Option> getOptionsByFilter(OptionsFilterDto filterDto) {
+        List<Option> options = new ArrayList<>();
 
         if (filterDto.getControlWork() != null) {
             ControlWork controlWork = controlWorkRepository.findFirstByName(filterDto.getControlWork());

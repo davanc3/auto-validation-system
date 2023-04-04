@@ -1,6 +1,7 @@
 package com.avs.autoValidationSystem.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,13 +21,17 @@ public class Option {
     private int option;
 
     @ManyToMany(mappedBy = "options")
+    @JsonIgnore
     private List<ControlWork> controlWorks = new ArrayList<>();
+    @ManyToMany(mappedBy = "options")
+    @JsonIgnore
+    private List<Task> tasks = new ArrayList<>();
+
+    public Option() {
+    }
 
     @JsonValue
     public int getOption(){
         return option;
-    }
-
-    public Option() {
     }
 }
