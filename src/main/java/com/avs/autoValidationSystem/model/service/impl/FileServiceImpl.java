@@ -51,9 +51,8 @@ public class FileServiceImpl implements FileService {
         String[] studentFio = uploadWorkDto.getStudent().split(" ");
 
         Student student = studentRepository.findFirstByLastNameAndNameAndSurname(studentFio[0], studentFio[1], studentFio[2]);
-        Option option = optionRepository.findFirstByOption(uploadWorkDto.getOption());
         ControlWork controlWork = controlWorkRepository.findFirstByName(uploadWorkDto.getWork());
-
+        Option option = optionRepository.findFirstByOptionAndControlWorks(uploadWorkDto.getOption(),controlWork);
         if (student == null || option == null || controlWork == null) {
             throw new IllegalArgumentException("В запросе переданы некорректные информационные данные");
         }

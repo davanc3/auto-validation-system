@@ -1,17 +1,3 @@
-CREATE TABLE `control_option` (
-                                  `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
-                                  `control_option` INT(10) NULL DEFAULT NULL,
-                                  PRIMARY KEY (`id`) USING BTREE
-)
-    COLLATE='utf8mb4_unicode_ci'
-    ENGINE=InnoDB
-    AUTO_INCREMENT=4
-;
-
-INSERT INTO `control_option` (`id`, `control_option`) VALUES (1, 1);
-INSERT INTO `control_option` (`id`, `control_option`) VALUES (2, 2);
-INSERT INTO `control_option` (`id`, `control_option`) VALUES (3, 3);
-
 CREATE TABLE `control_work` (
                                 `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
                                 `name` VARCHAR(25) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
@@ -24,22 +10,22 @@ CREATE TABLE `control_work` (
 
 INSERT INTO `control_work` (`id`, `name`) VALUES (4, 'Контрольная работа № 1');
 
-CREATE TABLE `option_to_work` (
+CREATE TABLE `control_option` (
                                   `id` BIGINT(19) NOT NULL AUTO_INCREMENT,
-                                  `control_work_id` BIGINT(19) NOT NULL,
-                                  `option_id` BIGINT(19) NOT NULL,
-                                  PRIMARY KEY (`id`) USING BTREE,
-                                  INDEX `FK__control_work` (`control_work_id`) USING BTREE,
-                                  INDEX `FK1cwkdsfjwakuqmtg6bxkih2ql` (`option_id`) USING BTREE,
-                                  CONSTRAINT `FK1cwkdsfjwakuqmtg6bxkih2ql` FOREIGN KEY (`option_id`) REFERENCES `control_option` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
-                                  CONSTRAINT `FK__control_work` FOREIGN KEY (`control_work_id`) REFERENCES `control_work` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+                                  `control_option` INT(10) NULL DEFAULT NULL,
+                                  `control_work_id` BIGINT(19) NULL DEFAULT NULL,
+                                      PRIMARY KEY (`id`) USING BTREE,
+                                      CONSTRAINT `FK__control_work234` FOREIGN KEY (`control_work_id`) REFERENCES `control_work` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 )
     COLLATE='utf8mb4_unicode_ci'
     ENGINE=InnoDB
+    AUTO_INCREMENT=4
 ;
 
-INSERT INTO `option_to_work` (`id`, `control_work_id`, `option_id`) VALUES (1, 4, 1);
-INSERT INTO `option_to_work` (`id`, `control_work_id`, `option_id`) VALUES (2, 4, 2);
+INSERT INTO `control_option` (`id`, `control_option`,`control_work_id`) VALUES (1, 1, 4);
+INSERT INTO `control_option` (`id`, `control_option`,`control_work_id`) VALUES (2, 2, 4);
+INSERT INTO `control_option` (`id`, `control_option`,`control_work_id`) VALUES (3, 3, 4);
+
 
 CREATE TABLE `role` (
                         `id` BIGINT(19) NOT NULL AUTO_INCREMENT,

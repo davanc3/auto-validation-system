@@ -3,6 +3,8 @@ package com.avs.autoValidationSystem.controller;
 import com.avs.autoValidationSystem.model.dto.uploadlWorksPage.TasksFilterDto;
 import com.avs.autoValidationSystem.model.entity.Task;
 import com.avs.autoValidationSystem.model.service.TaskService;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +19,8 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    @GetMapping("")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Task> getTasksByOption(TasksFilterDto tasksFilterDto) {
         return taskService.getTasksByOption(tasksFilterDto);
     }

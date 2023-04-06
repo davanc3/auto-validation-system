@@ -24,7 +24,6 @@ public class OptionsServiceImpl implements OptionsService {
     @Override
     public List<Option> getOptionsByFilter(OptionsFilterDto filterDto) {
         List<Option> options = new ArrayList<>();
-
         if (filterDto.getControlWork() != null) {
             ControlWork controlWork = controlWorkRepository.findFirstByName(filterDto.getControlWork());
             if (controlWork != null) {
@@ -35,7 +34,7 @@ public class OptionsServiceImpl implements OptionsService {
         return options;
     }
 
-    public Option getOptionByOption(int option) {
-        return optionRepository.findFirstByOption(option);
+    public Option getOptionByOptionAndControlWork(int option,ControlWork controlWork) {
+        return optionRepository.findFirstByOptionAndControlWorks(option,controlWork);
     }
 }
