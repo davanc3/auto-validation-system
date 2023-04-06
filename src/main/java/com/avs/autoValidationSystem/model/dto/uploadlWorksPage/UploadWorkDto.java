@@ -9,6 +9,7 @@ public class UploadWorkDto {
     private String student;
     private String work;
     private int option;
+    private String task;
     private MultipartFile[] files;
     public UploadWorkDto() {
     }

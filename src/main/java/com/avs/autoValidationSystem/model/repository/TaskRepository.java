@@ -4,4 +4,5 @@ import com.avs.autoValidationSystem.model.entity.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
+    Task findFirstByName(String name);
 }

@@ -26,7 +26,11 @@ public class ArchiveCreator {
                     Translator.convertCyrToLat(studyGroup) + "/" +
                             Translator.convertCyrToLat(studentToWork.getControlWork().getName()) + "/" +
                             studentToWork.getOption().getOption() + "/" +
-                            filePathArray[filePathArray.length - 1]);
+                            studentToWork.getStudent().getLastName() + "_" +
+                            studentToWork.getStudent().getName() + "_" +
+                            studentToWork.getStudent().getSurname() + "/" +
+                            studentToWork.getTask().getName() + "/" +
+                    filePathArray[filePathArray.length - 1]);
         }
 
         // Закрываем архив

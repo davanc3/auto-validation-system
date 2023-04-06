@@ -28,10 +28,7 @@ public class ControlWork {
     @JsonIgnore
     private List<Student> students = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(name = "option_to_work",
-            joinColumns = {@JoinColumn(name = "control_work_id")},
-            inverseJoinColumns = {@JoinColumn(name = "option_id")})
+    @OneToMany(mappedBy = "controlWorks")
     @JsonIgnore
     private List<Option> options = new ArrayList<>();
 

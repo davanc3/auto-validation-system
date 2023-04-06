@@ -28,6 +28,7 @@ public class FilesController {
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Object> uploadWork(@ModelAttribute UploadWorkDto uploadWorkDto) throws IOException {
+        uploadWorkDto.getTask();
         fileService.saveFiles(uploadWorkDto);
         return ResponseEntity.ok("ok");
     }

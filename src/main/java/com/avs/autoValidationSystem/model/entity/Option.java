@@ -20,9 +20,10 @@ public class Option {
     @Column(name = "control_option")
     private int option;
 
-    @ManyToMany(mappedBy = "options")
+    @ManyToOne
+    @JoinColumn(name ="controlWork_id")
     @JsonIgnore
-    private List<ControlWork> controlWorks = new ArrayList<>();
+    private ControlWork controlWorks;
     @ManyToMany(mappedBy = "options")
     @JsonIgnore
     private List<Task> tasks = new ArrayList<>();

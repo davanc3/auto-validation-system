@@ -29,14 +29,16 @@ public class FileServiceImpl implements FileService {
     private final OptionRepository optionRepository;
     private final ControlWorkRepository controlWorkRepository;
     private final StudentToWorkRepository studentToWorkRepository;
+    private final TaskRepository taskRepository;
     private final GroupRepository groupRepository;
     private final StudentsService studentsService;
 
-    public FileServiceImpl(StudentRepository studentRepository, OptionRepository optionRepository, ControlWorkRepository controlWorkRepository, StudentToWorkRepository studentToWorkRepository, GroupRepository groupRepository, StudentsService studentsService) {
+    public FileServiceImpl(StudentRepository studentRepository, OptionRepository optionRepository, ControlWorkRepository controlWorkRepository, StudentToWorkRepository studentToWorkRepository, TaskRepository taskRepository, GroupRepository groupRepository, StudentsService studentsService) {
         this.studentRepository = studentRepository;
         this.optionRepository = optionRepository;
         this.controlWorkRepository = controlWorkRepository;
         this.studentToWorkRepository = studentToWorkRepository;
+        this.taskRepository = taskRepository;
         this.groupRepository = groupRepository;
         this.studentsService = studentsService;
     }
@@ -47,40 +49,31 @@ public class FileServiceImpl implements FileService {
                 "/" + uploadWorkDto.getGroup() +
                 "/" + uploadWorkDto.getWork() +
                 "/" + uploadWorkDto.getStudent();
-        String fileName = uploadWorkDto.getOption() + "_" + uploadWorkDto.getStudent();
         String[] studentFio = uploadWorkDto.getStudent().split(" ");
 
         Student student = studentRepository.findFirstByLastNameAndNameAndSurname(studentFio[0], studentFio[1], studentFio[2]);
-        Option option = optionRepository.findFirstByOption(uploadWorkDto.getOption());
         ControlWork controlWork = controlWorkRepository.findFirstByName(uploadWorkDto.getWork());
-
-        if (student == null || option == null || controlWork == null) {
+        Option option = optionRepository.findFirstByOptionAndControlWorks(uploadWorkDto.getOption(),controlWork);
+        Task task = taskRepository.findFirstByName(uploadWorkDto.getTask());
+        if (student == null || option == null || controlWork == null || task == null) {
             throw new IllegalArgumentException("В запросе переданы некорректные информационные данные");
         }
 
-        List<StudentToWork> studentToWorkList = studentToWorkRepository.findAllByStudentAndControlWorkAndOption(student, controlWork, option);
-
         String directorySaveFilesLatin = Translator.convertCyrToLat(directorySaveFiles);
-        String fileNameLatin = Translator.convertCyrToLat(fileName);
 
         new File(directorySaveFilesLatin).mkdirs();
 
-        int size = studentToWorkList.size();
         MultipartFile[] files = uploadWorkDto.getFiles();
         for (MultipartFile multipartFile : files){
             StudentToWork studentToWork = new StudentToWork();
             studentToWork.setControlWork(controlWork);
             studentToWork.setOption(option);
             studentToWork.setStudent(student);
-
-            String originalFilename = multipartFile.getOriginalFilename();
-            String extension = originalFilename.split("\\.")[1];
-
-            String uploadPath = directorySaveFilesLatin + "/" + fileNameLatin + "_" + (size + 1) + "." + extension;
-            size++;
+            studentToWork.setTask(task);
+            studentToWork.setLoadDateTime(OffsetDateTime.now());
+            String uploadPath = directorySaveFilesLatin + "/" + multipartFile.getOriginalFilename();
             File convFile = new File(uploadPath);
             multipartFile.transferTo(convFile);
-
             studentToWork.setUploadPath(uploadPath);
             try {
                 studentToWorkRepository.save(studentToWork);
