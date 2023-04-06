@@ -1,5 +1,6 @@
 package com.avs.autoValidationSystem.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,5 +26,10 @@ public class Task {
     private List<Option> options = new ArrayList<>();
 
     public Task() {
+    }
+
+    @JsonValue
+    public String getName(){
+        return name;
     }
 }
