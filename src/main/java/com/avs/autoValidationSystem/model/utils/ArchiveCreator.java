@@ -70,26 +70,23 @@ public class ArchiveCreator {
         byte[] buffer = new byte[1024];
 
         // Создаем новый элемент архива и добавляем его в архив
-        ZipEntry ze = new ZipEntry(zipPath);
-        zos.putNextEntry(ze);
+
 
         // Читаем файл и записываем его содержимое в архив
 
         FileInputStream fis = null;
+        ZipEntry ze = new ZipEntry(zipPath);
         try {
+            zos.putNextEntry(ze);
             fis = new FileInputStream(filePath);
             int len;
             while ((len = fis.read(buffer)) > 0) {
                 zos.write(buffer, 0, len);
             }
             fis.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            // Закрываем элемент архива
             zos.closeEntry();
+        } catch (IOException e) {
+            //System.out.println(e.getMessage());
         }
-
-
     }
 }
