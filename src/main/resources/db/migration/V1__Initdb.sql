@@ -24,7 +24,6 @@ CREATE TABLE `control_option` (
 
 INSERT INTO `control_option` (`id`, `control_option`,`control_work_id`) VALUES (1, 1, 4);
 INSERT INTO `control_option` (`id`, `control_option`,`control_work_id`) VALUES (2, 2, 4);
-INSERT INTO `control_option` (`id`, `control_option`,`control_work_id`) VALUES (3, 3, 4);
 
 
 CREATE TABLE `role` (
