@@ -50,8 +50,12 @@ public class FileServiceImpl implements FileService {
                 "/" + uploadWorkDto.getWork() +
                 "/" + uploadWorkDto.getStudent();
         String[] studentFio = uploadWorkDto.getStudent().split(" ");
-
-        Student student = studentRepository.findFirstByLastNameAndNameAndSurname(studentFio[0], studentFio[1], studentFio[2]);
+        Student student = null;
+        if (studentFio.length > 2) {
+            student = studentRepository.findFirstByLastNameAndNameAndSurname(studentFio[0], studentFio[1], studentFio[2]);
+        } else {
+            student = studentRepository.findFirstByLastNameAndName(studentFio[0], studentFio[1]);
+        }
         ControlWork controlWork = controlWorkRepository.findFirstByName(uploadWorkDto.getWork());
         Option option = optionRepository.findFirstByOptionAndControlWorks(uploadWorkDto.getOption(),controlWork);
         Task task = taskRepository.findFirstByName(uploadWorkDto.getTask());
