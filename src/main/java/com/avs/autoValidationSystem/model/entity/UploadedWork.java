@@ -1,14 +1,17 @@
 package com.avs.autoValidationSystem.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "student_to_work")
+@Table(name = "uploaded_work")
 @Data
-public class StudentToWork {
+public class UploadedWork {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,16 +29,17 @@ public class StudentToWork {
     @JoinColumn(name = "control_option_id")
     private Option option;
 
-    @Column(name = "upload_path")
-    private String uploadPath;
-
     @ManyToOne
     @JoinColumn(name = "task_id")
     private Task task;
 
+    @OneToMany(mappedBy = "uploadedWork")
+    @JsonIgnore
+    private List<UploadedFile> uploadedFiles = new ArrayList<>();
+
     @Column(name = "load_date_time")
     private OffsetDateTime loadDateTime;
 
-    public StudentToWork() {
+    public UploadedWork() {
     }
 }
