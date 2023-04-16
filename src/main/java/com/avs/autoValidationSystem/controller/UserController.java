@@ -1,10 +1,9 @@
 package com.avs.autoValidationSystem.controller;
 
 import com.avs.autoValidationSystem.model.entity.Role;
-import com.avs.autoValidationSystem.model.entity.User;
 import com.avs.autoValidationSystem.model.service.UserService;
 import com.avs.autoValidationSystem.security.jwt.JwtProvider;
-import com.avs.autoValidationSystem.model.dto.RegistrationDto;
+import com.avs.autoValidationSystem.model.dto.impl.RegistrationDto;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController

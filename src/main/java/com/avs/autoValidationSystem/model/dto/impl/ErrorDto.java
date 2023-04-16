@@ -1,12 +1,13 @@
-package com.avs.autoValidationSystem.model.dto;
+package com.avs.autoValidationSystem.model.dto.impl;
 
+import com.avs.autoValidationSystem.model.dto.Dto;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.http.HttpStatus;
 
 //todo: добавить валидацию
 @ToString
-public class ErrorDto {
+public class ErrorDto implements Dto {
     private final HttpStatus httpStatus;
     private String msg = "Произошла ошибка сервера";
 

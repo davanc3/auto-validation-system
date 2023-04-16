@@ -1,6 +1,5 @@
 package com.avs.autoValidationSystem.model.service;
 
-import com.avs.autoValidationSystem.model.dto.RegistrationDto;
 import com.avs.autoValidationSystem.model.entity.User;
 import com.avs.autoValidationSystem.security.jwt.JwtAuthentication;
 import com.avs.autoValidationSystem.security.jwt.JwtRequest;

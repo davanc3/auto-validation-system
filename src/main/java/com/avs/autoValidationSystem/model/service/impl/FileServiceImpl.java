@@ -1,7 +1,7 @@
 package com.avs.autoValidationSystem.model.service.impl;
 
-import com.avs.autoValidationSystem.model.dto.uploadlWorksPage.ArchiveFilterDto;
-import com.avs.autoValidationSystem.model.dto.uploadlWorksPage.UploadWorkDto;
+import com.avs.autoValidationSystem.model.dto.impl.uploadlWorksPage.ArchiveFilterDto;
+import com.avs.autoValidationSystem.model.dto.impl.uploadlWorksPage.UploadWorkDto;
 import com.avs.autoValidationSystem.model.entity.*;
 import com.avs.autoValidationSystem.model.repository.*;
 import com.avs.autoValidationSystem.model.service.FileService;

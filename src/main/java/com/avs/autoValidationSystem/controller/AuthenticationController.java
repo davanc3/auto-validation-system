@@ -5,7 +5,7 @@ import com.avs.autoValidationSystem.model.service.AuthService;
 import com.avs.autoValidationSystem.security.jwt.JwtRequest;
 import com.avs.autoValidationSystem.security.jwt.JwtResponse;
 import com.avs.autoValidationSystem.security.jwt.RefreshJwtRequest;
-import com.avs.autoValidationSystem.model.dto.RegistrationDto;
+import com.avs.autoValidationSystem.model.dto.impl.RegistrationDto;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;

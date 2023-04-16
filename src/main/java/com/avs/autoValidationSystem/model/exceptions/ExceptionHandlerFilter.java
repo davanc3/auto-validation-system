@@ -1,6 +1,6 @@
 package com.avs.autoValidationSystem.model.exceptions;
 
-import com.avs.autoValidationSystem.model.dto.ErrorDto;
+import com.avs.autoValidationSystem.model.dto.impl.ErrorDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.JwtException;

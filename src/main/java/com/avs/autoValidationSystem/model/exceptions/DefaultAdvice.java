@@ -1,6 +1,6 @@
 package com.avs.autoValidationSystem.model.exceptions;
 
-import com.avs.autoValidationSystem.model.dto.ErrorDto;
+import com.avs.autoValidationSystem.model.dto.impl.ErrorDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
