@@ -35,4 +35,10 @@ public class Student {
 
     public Student() {
     }
+
+    public String getFio() {
+        return (lastName != null ? lastName : "" )
+                + (name != null ? name : "")
+                + (surname != null ? surname : "");
+    }
 }

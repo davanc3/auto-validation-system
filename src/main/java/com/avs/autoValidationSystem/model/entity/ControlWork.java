@@ -21,7 +21,7 @@ public class ControlWork {
     private String name;
 
     @ManyToMany
-    @JoinTable(name = "student_to_work",
+    @JoinTable(name = "uploaded_work",
             joinColumns = {@JoinColumn(name = "control_work_id")},
             inverseJoinColumns = {@JoinColumn(name = "student_id")})
     @OrderBy("lastName asc")

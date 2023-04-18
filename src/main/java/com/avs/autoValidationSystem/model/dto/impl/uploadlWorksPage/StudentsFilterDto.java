@@ -1,4 +1,4 @@
-package com.avs.autoValidationSystem.model.dto.uploadlWorksPage;
+package com.avs.autoValidationSystem.model.dto.impl.uploadlWorksPage;
 
 import lombok.Data;
 

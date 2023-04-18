@@ -1,7 +1,7 @@
 package com.avs.autoValidationSystem.controller;
 
-import com.avs.autoValidationSystem.model.dto.uploadlWorksPage.ArchiveFilterDto;
-import com.avs.autoValidationSystem.model.dto.uploadlWorksPage.UploadWorkDto;
+import com.avs.autoValidationSystem.model.dto.impl.uploadlWorksPage.ArchiveFilterDto;
+import com.avs.autoValidationSystem.model.dto.impl.uploadlWorksPage.UploadWorkDto;
 import com.avs.autoValidationSystem.model.service.FileService;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -28,7 +28,6 @@ public class FilesController {
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Object> uploadWork(@ModelAttribute UploadWorkDto uploadWorkDto) throws IOException {
-        uploadWorkDto.getTask();
         fileService.saveFiles(uploadWorkDto);
         return ResponseEntity.ok("ok");
     }

@@ -1,6 +1,6 @@
 package com.avs.autoValidationSystem.model.service.impl;
 
-import com.avs.autoValidationSystem.model.dto.uploadlWorksPage.StudentsFilterDto;
+import com.avs.autoValidationSystem.model.dto.impl.uploadlWorksPage.StudentsFilterDto;
 import com.avs.autoValidationSystem.model.entity.ControlWork;
 import com.avs.autoValidationSystem.model.entity.StudyGroup;
 import com.avs.autoValidationSystem.model.repository.GroupRepository;

@@ -1,7 +1,8 @@
 package com.avs.autoValidationSystem.model.utils;
 
+import com.avs.autoValidationSystem.model.entity.UploadedFile;
 import com.avs.autoValidationSystem.model.entity.Student;
-import com.avs.autoValidationSystem.model.entity.StudentToWork;
+import com.avs.autoValidationSystem.model.entity.UploadedWork;
 
 import java.io.*;
 import java.util.List;
@@ -9,28 +10,30 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class ArchiveCreator {
-    public static void createArchiveToGroup(String archivePath, List<StudentToWork> studentToWorks, String studyGroup) throws IOException {
+    public static void createArchiveToGroup(String archivePath, List<UploadedWork> uploadedWorks, String studyGroup) throws IOException {
         // Создаем архив
         FileOutputStream fos = new FileOutputStream(archivePath);
         ZipOutputStream zos = new ZipOutputStream(fos);
 
         // Добавляем файлы в новую структуру папок
-        for (StudentToWork studentToWork: studentToWorks) {
-            String filePath = studentToWork.getUploadPath();
-            if (filePath == null) {
-                continue;
-            }
-            String[] filePathArray = filePath.split("/");
+        for (UploadedWork uploadedWork : uploadedWorks) {
+            for (UploadedFile uploadedFile : uploadedWork.getUploadedFiles()) {
+                String filePath = uploadedFile.getUploadPath();
+                if (filePath == null) {
+                    continue;
+                }
+                String[] filePathArray = filePath.split("/");
 
-            addFileToZip(zos, studentToWork.getUploadPath(),
-                    Translator.convertCyrToLat(studyGroup) + "/" +
-                            Translator.convertCyrToLat(studentToWork.getControlWork().getName()) + "/" +
-                            studentToWork.getOption().getOption() + "/" +
-                            studentToWork.getStudent().getLastName() + "_" +
-                            studentToWork.getStudent().getName() + "_" +
-                            studentToWork.getStudent().getSurname() + "/" +
-                            studentToWork.getTask().getName() + "/" +
-                    filePathArray[filePathArray.length - 1]);
+                addFileToZip(zos, uploadedFile.getUploadPath(),
+                        Translator.convertCyrToLat(studyGroup) + "/" +
+                                Translator.convertCyrToLat(uploadedWork.getControlWork().getName()) + "/" +
+                                uploadedWork.getOption().getOption() + "/" +
+                                uploadedWork.getStudent().getLastName() + "_" +
+                                uploadedWork.getStudent().getName() + "_" +
+                                uploadedWork.getStudent().getSurname() + "/" +
+                                uploadedWork.getTask().getName() + "/" +
+                                filePathArray[filePathArray.length - 1]);
+            }
         }
 
         // Закрываем архив
@@ -38,27 +41,27 @@ public class ArchiveCreator {
         fos.close();
     }
 
-    public static void createArchiveToStudent(String archivePath, List<StudentToWork> studentToWorks) throws IOException {
+    public static void createArchiveToStudent(String archivePath, List<UploadedWork> uploadedWorks) throws IOException {
         // Создаем архив
         FileOutputStream fos = new FileOutputStream(archivePath);
         ZipOutputStream zos = new ZipOutputStream(fos);
 
         // Добавляем файлы в новую структуру папок
-        for (StudentToWork studentToWork: studentToWorks) {
-            String filePath = studentToWork.getUploadPath();
-            if (filePath == null) {
-                continue;
+        for (UploadedWork uploadedWork : uploadedWorks) {
+            Student student = uploadedWork.getStudent();
+            for (UploadedFile uploadedFile : uploadedWork.getUploadedFiles()) {
+                String filePath = uploadedFile.getUploadPath();
+                if (filePath == null) {
+                    continue;
+                }
+                String[] filePathArray = filePath.split("/");
+                addFileToZip(zos, uploadedFile.getUploadPath(),
+                                Translator.convertCyrToLat(student.getLastName() + " "
+                                        + student.getName() + " "
+                                        + student.getSurname()) + "/" +
+                                        Translator.convertCyrToLat(uploadedWork.getControlWork().getName()) + "/" +
+                filePathArray[filePathArray.length - 1]);
             }
-            String[] filePathArray = filePath.split("/");
-
-            Student student = studentToWork.getStudent();
-
-            addFileToZip(zos, studentToWork.getUploadPath(),
-                    Translator.convertCyrToLat(student.getLastName() + " "
-                            + student.getName() + " "
-                            + student.getSurname()) + "/" +
-                            Translator.convertCyrToLat(studentToWork.getControlWork().getName()) + "/" +
-                            filePathArray[filePathArray.length - 1]);
         }
 
         // Закрываем архив
