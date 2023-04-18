@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class FilesController {
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Object> uploadWork(@ModelAttribute UploadWorkDto uploadWorkDto) throws IOException {
-        fileService.saveFiles(uploadWorkDto);
+        fileService.uploadWork(uploadWorkDto);
         return ResponseEntity.ok("ok");
     }
 
@@ -49,5 +50,12 @@ public class FilesController {
         }
 
         return response;
+    }
+
+    @PostMapping("/validate-result")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> uploadValidateResult(@ModelAttribute MultipartFile file) throws IOException {
+        fileService.uploadValidateResult(file);
+        return ResponseEntity.ok("ok");
     }
 }
