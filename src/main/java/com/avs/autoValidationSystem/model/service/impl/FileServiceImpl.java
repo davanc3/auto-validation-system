@@ -47,13 +47,9 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void saveFiles(UploadWorkDto uploadWorkDto) throws IOException{
-        String directorySaveFiles = rootPath +
-                "/" + uploadWorkDto.getGroup() +
-                "/" + uploadWorkDto.getWork() +
-                "/" + uploadWorkDto.getStudent();
+    public void uploadWork(UploadWorkDto uploadWorkDto) throws IOException{
         String[] studentFio = uploadWorkDto.getStudent().split(" ");
-        Student student = null;
+        Student student;
         if (studentFio.length > 2) {
             student = studentRepository.findFirstByLastNameAndNameAndSurname(studentFio[0], studentFio[1], studentFio[2]);
         } else {
@@ -66,6 +62,10 @@ public class FileServiceImpl implements FileService {
             throw new IllegalArgumentException("В запросе переданы некорректные информационные данные");
         }
 
+        String directorySaveFiles = rootPath +
+                "/" + uploadWorkDto.getGroup() +
+                "/" + uploadWorkDto.getWork() +
+                "/" + uploadWorkDto.getStudent();
         String directorySaveFilesLatin = Translator.convertCyrToLat(directorySaveFiles);
 
         new File(directorySaveFilesLatin).mkdirs();
@@ -86,15 +86,34 @@ public class FileServiceImpl implements FileService {
             e.printStackTrace();
         }
         for (MultipartFile multipartFile : files) {
-            String uploadPath = directorySaveFilesLatin + "/" + multipartFile.getOriginalFilename();
-            File convFile = new File(uploadPath);
-            multipartFile.transferTo(convFile);
+            String uploadPath = saveFile(directorySaveFilesLatin, multipartFile);
             UploadedFile uploadedFile = new UploadedFile();
             uploadedFile.setUploadPath(uploadPath);
             uploadedFile.setFileName(multipartFile.getOriginalFilename());
             uploadedFile.setUploadedWork(uploadedWork);
             uploadedFileRepository.save(uploadedFile);
         }
+    }
+
+    @Override
+    public void uploadValidateResult(MultipartFile file) throws IOException {
+        String directorySaveFiles = rootPath
+                + "/validateResult--"
+                + OffsetDateTime.now().toString().replaceAll(":", "\\.");
+        File directory = new File(directorySaveFiles);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        saveFile(directorySaveFiles, file);
+    }
+
+    private String saveFile(String fileDirectoryPath, MultipartFile file) throws IOException {
+        String uploadPath = fileDirectoryPath + "/" + file.getOriginalFilename();
+        File convFile = new File(uploadPath);
+        file.transferTo(convFile);
+
+        return uploadPath;
     }
 
     @Override
