@@ -7,6 +7,7 @@ import com.avs.autoValidationSystem.model.formatter.Formatter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UploadedWorkFormatter implements Formatter<UploadedWork, UploadedWorksInfoDto> {
@@ -34,9 +35,10 @@ public class UploadedWorkFormatter implements Formatter<UploadedWork, UploadedWo
             filesName.add(file.getFileName());
         }
         uploadedWorkInfoDto.setFiles(filesName);
+
         uploadedWorkInfoDto.setDateTime(
                 new SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
-                .format(uploadedWork.getLoadDateTime())
+                        .format(Date.from(uploadedWork.getLoadDateTime().toInstant()))
         );
 
         return uploadedWorkInfoDto;

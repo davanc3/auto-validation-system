@@ -37,8 +37,8 @@ public class Student {
     }
 
     public String getFio() {
-        return (lastName != null ? lastName : "" )
-                + (name != null ? name : "")
+        return (lastName != null ? lastName : "" ) + " "
+                + (name != null ? name : "")   + " "
                 + (surname != null ? surname : "");
     }
 }
