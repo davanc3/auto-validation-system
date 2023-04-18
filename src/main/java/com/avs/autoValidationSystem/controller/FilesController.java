@@ -54,7 +54,7 @@ public class FilesController {
 
     @PostMapping("/validate-result")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Object> uploadValidateResult(@ModelAttribute MultipartFile file) throws IOException {
+    public ResponseEntity<Object> uploadValidateResult(@RequestParam("file") MultipartFile file) throws IOException {
         if (file == null) {
             throw new IllegalArgumentException("Файл с результатами проверки работ не был передан");
         }
