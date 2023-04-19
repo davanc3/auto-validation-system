@@ -54,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
             final String accessToken = jwtProvider.createToken(user.getLogin(), user.getRoles());
             final String refreshToken = jwtProvider.createRefreshToken(user.getLogin());
             refreshStorage.put(user.getLogin(), refreshToken);
-            return new JwtResponse(accessToken, refreshToken);
+            return new JwtResponse(accessToken, refreshToken,jwtProvider.getValidityTokenInMinute());
         } else {
             throw new AuthException("Неправильный пароль");
         }
@@ -118,10 +118,10 @@ public class AuthServiceImpl implements AuthService {
                 final User user = userService.findByLogin(login)
                         .orElseThrow(() -> new AuthException("Пользователь не найден"));
                 final String accessToken = jwtProvider.createToken(user.getLogin(),user.getRoles());
-                return new JwtResponse(accessToken, null);
+                return new JwtResponse(accessToken, null,jwtProvider.getValidityTokenInMinute());
             }
         }
-        return new JwtResponse(null, null);
+        return new JwtResponse(null, null,jwtProvider.getValidityTokenInMinute());
     }
 
     /**
@@ -143,7 +143,7 @@ public class AuthServiceImpl implements AuthService {
                 final String accessToken = jwtProvider.createToken(user.getLogin(),user.getRoles());
                 final String newRefreshToken = jwtProvider.createRefreshToken(user.getLogin());
                 refreshStorage.put(user.getLogin(), newRefreshToken);
-                return new JwtResponse(accessToken, newRefreshToken);
+                return new JwtResponse(accessToken, newRefreshToken,jwtProvider.getValidityTokenInMinute());
             }
         }
         throw new AuthException("Невалидный JWT токен");

@@ -121,4 +121,8 @@ public class JwtProvider {
         });
         return result;
     }
+
+    public long getValidityTokenInMinute() {
+        return validityTokenInMinute;
+    }
 }
