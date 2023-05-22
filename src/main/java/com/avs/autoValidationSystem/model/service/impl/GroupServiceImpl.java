@@ -1,5 +1,6 @@
 package com.avs.autoValidationSystem.model.service.impl;
 
+import com.avs.autoValidationSystem.model.dto.impl.reviewWork.FileTreeDto;
 import com.avs.autoValidationSystem.model.dto.impl.reviewWork.TreeDto;
 import com.avs.autoValidationSystem.model.entity.Student;
 import com.avs.autoValidationSystem.model.entity.StudyGroup;
@@ -40,7 +41,7 @@ public class GroupServiceImpl implements GroupService {
             if (!students.isEmpty()) {
                 for (Student student: students) {
                     TreeDto studentTree = new TreeDto();
-                    studentTree.setName(student.getName());
+                    studentTree.setName(student.getFio());
                     
                     List<UploadedWork> uploadedWorks = student.getUploadedWorks();
                     if (!uploadedWorks.isEmpty()) {
@@ -51,8 +52,9 @@ public class GroupServiceImpl implements GroupService {
                             List<UploadedFile> uploadedFiles = uploadedWork.getUploadedFiles();
                             if (!uploadedFiles.isEmpty()) {
                                 for (UploadedFile uploadedFile: uploadedFiles) {
-                                    TreeDto fileTree = new TreeDto();
+                                    FileTreeDto fileTree = new FileTreeDto();
                                     fileTree.setName(uploadedFile.getFileName());
+                                    fileTree.setFileId(uploadedFile.getId());
                                     workTree.pushChildren(fileTree);
                                 }
                             }
