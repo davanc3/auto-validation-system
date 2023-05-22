@@ -148,4 +148,11 @@ public class FileServiceImpl implements FileService {
 
         return archivePath;
     }
+
+    @Override
+    public File getFileById(long id) {
+        UploadedFile uploadedFile = uploadedFileRepository.findById(id);
+
+        return new File(uploadedFile.getUploadPath());
+    }
 }
