@@ -44,8 +44,12 @@ public class FilesController {
             File archive = new File(archivePath);
             Resource resource = new FileSystemResource(archive);
 
-            response = ResponseEntity.ok().header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,"*").header(HttpHeaders.CONTENT_DISPOSITION,
-                    "attachment; filename=\"" + archive.getName() + "\"") .contentType(MediaType.parseMediaType("application/zip"))
+            response = ResponseEntity
+                    .ok()
+                    .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,"*")
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment; filename=\"" + archive.getName() + "\"")
+                    .contentType(MediaType.parseMediaType("application/zip"))
                     .body(resource);
         }
 
@@ -60,5 +64,25 @@ public class FilesController {
         }
         fileService.uploadValidateResult(file);
         return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/file/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Resource> getFileById(@PathVariable long id) {
+        ResponseEntity<Resource> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        File file = fileService.getFileById(id);
+        if (file.exists()) {
+            Resource resource = new FileSystemResource(fileService.getFileById(id));
+
+            response = ResponseEntity
+                    .ok()
+                    .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS,"*")
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment; filename=\"" + file.getName() + "\"")
+                    .body(resource);
+        }
+
+        return response;
     }
 }
