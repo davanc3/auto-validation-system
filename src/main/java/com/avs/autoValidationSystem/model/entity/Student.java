@@ -34,6 +34,7 @@ public class Student {
     private List<ControlWork> controlWorks = new ArrayList<>();
 
     @OneToMany(mappedBy = "student")
+    @JsonIgnore
     private List<UploadedWork> uploadedWorks = new ArrayList<>();
 
     public Student() {
