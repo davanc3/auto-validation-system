@@ -1,5 +1,6 @@
 package com.avs.autoValidationSystem.model.dto.impl.reviewWork;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 @Data
 public class TreeDto {
     private String name;
+
     private List<TreeDto> children = new ArrayList<>();
 
     public TreeDto() {

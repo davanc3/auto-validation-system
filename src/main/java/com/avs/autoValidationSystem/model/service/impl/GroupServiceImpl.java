@@ -31,45 +31,39 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<TreeDto> getWorksTree() {
         List<TreeDto> worksTreeDtoList = new ArrayList<>();
-
         List<StudyGroup> studyGroups = groupRepository.findAll();
         for (StudyGroup group: studyGroups) {
             TreeDto groupTree = new TreeDto();
             groupTree.setName(group.getName());
-
             List<Student> students = group.getStudents();
             if (!students.isEmpty()) {
                 for (Student student: students) {
                     TreeDto studentTree = new TreeDto();
                     studentTree.setName(student.getFio());
-                    
                     List<UploadedWork> uploadedWorks = student.getUploadedWorks();
                     if (!uploadedWorks.isEmpty()) {
                         for (UploadedWork uploadedWork: uploadedWorks) {
                             TreeDto workTree = new TreeDto();
                             workTree.setName(uploadedWork.getControlWork().getName());
-
                             List<UploadedFile> uploadedFiles = uploadedWork.getUploadedFiles();
                             if (!uploadedFiles.isEmpty()) {
                                 for (UploadedFile uploadedFile: uploadedFiles) {
                                     FileTreeDto fileTree = new FileTreeDto();
+                                    fileTree.setChildren(null);
                                     fileTree.setName(uploadedFile.getFileName());
                                     fileTree.setFileId(uploadedFile.getId());
                                     workTree.pushChildren(fileTree);
                                 }
                             }
-
                             studentTree.pushChildren(workTree);
                         }
                     }
-                    
                     groupTree.pushChildren(studentTree);
                 }
             }
-            
             worksTreeDtoList.add(groupTree);
         }
-        
         return worksTreeDtoList;
     }
+
 }

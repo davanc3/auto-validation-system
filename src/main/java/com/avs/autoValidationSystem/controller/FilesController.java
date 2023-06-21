@@ -66,7 +66,7 @@ public class FilesController {
         return ResponseEntity.ok("ok");
     }
 
-    @GetMapping("/file/{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Resource> getFileById(@PathVariable long id) {
         ResponseEntity<Resource> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
