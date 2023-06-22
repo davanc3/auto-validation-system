@@ -1,6 +1,7 @@
 package com.avs.autoValidationSystem.model.service.impl;
 
 import com.avs.autoValidationSystem.model.dto.impl.uploadedWork.UploadedWorksInfoDto;
+import com.avs.autoValidationSystem.model.entity.Student;
 import com.avs.autoValidationSystem.model.entity.UploadedWork;
 import com.avs.autoValidationSystem.model.formatter.impl.UploadedWorkFormatter;
 import com.avs.autoValidationSystem.model.repository.UploadedWorkRepository;
@@ -19,7 +20,11 @@ public class UploadedWorkServiceImpl implements UploadedWorkService {
 
     @Override
     public List<UploadedWorksInfoDto> getUploadedWorksInfo() {
-
         return new UploadedWorkFormatter().getFormattedData(uploadedWorkRepository.findAll());
+    }
+
+    @Override
+    public List<UploadedWorksInfoDto> getUploadedWorksInfoByStudent(Student student) {
+        return new UploadedWorkFormatter().getFormattedData(uploadedWorkRepository.findByStudent(student));
     }
 }

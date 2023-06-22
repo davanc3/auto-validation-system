@@ -15,4 +15,6 @@ public interface UploadedWorkRepository extends JpaRepository<UploadedWork, Long
 
     @Query("select s from UploadedWork as s where s.student in :students")
     List<UploadedWork> findAllByStudents(@Param("students") List<Student> students);
+
+    List<UploadedWork> findByStudent(Student student);
 }
