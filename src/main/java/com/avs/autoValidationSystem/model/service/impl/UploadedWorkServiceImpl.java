@@ -31,11 +31,6 @@ public class UploadedWorkServiceImpl implements UploadedWorkService {
     }
 
     @Override
-    public List<UploadedWorksInfoDto> getUploadedWorksInfoByStudent(Student student) {
-        return new UploadedWorkFormatter().getFormattedData(uploadedWorkRepository.findByStudent(student));
-    }
-
-    @Override
     public List<UploadedWorksInfoDto> getUploadedWorksInfoByGroup(StudentsFilterDto studentsFilterDto) {
         return new UploadedWorkFormatter().getFormattedData(uploadedWorkRepository.findAllByStudents(studentsService.getStudentsByFilter(studentsFilterDto)));
     }

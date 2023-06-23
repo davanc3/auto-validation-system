@@ -9,6 +9,5 @@ import java.util.List;
 
 public interface UploadedWorkService {
     List<UploadedWorksInfoDto> getUploadedWorksInfo();
-    List<UploadedWorksInfoDto> getUploadedWorksInfoByStudent(Student student);
     List<UploadedWorksInfoDto> getUploadedWorksInfoByGroup(StudentsFilterDto studentsFilterDto);
 }

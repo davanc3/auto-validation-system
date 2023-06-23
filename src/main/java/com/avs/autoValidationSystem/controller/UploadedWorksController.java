@@ -30,19 +30,7 @@ public class UploadedWorksController {
     public List<UploadedWorksInfoDto> getAllUploadedWorkInfo() {
         return uploadedWorkService.getUploadedWorksInfo();
     }
-    @GetMapping("/student")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<UploadedWorksInfoDto> getUploadedWorkInfoByStudent(@RequestParam("student") String studentName){
-        String[] studentSplit = studentName.split(" ");
-        Student student;
-        if (studentSplit.length > 2) {
-            student = studentRepository.findFirstByLastNameAndNameAndSurname(studentSplit[0], studentSplit[1], studentSplit[2]);
-        } else {
-            student = studentRepository.findFirstByLastNameAndName(studentSplit[0], studentSplit[1]);
-        }
-        return uploadedWorkService.getUploadedWorksInfoByStudent(student);
-    }
-    @GetMapping("/group")
+    @GetMapping("/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<UploadedWorksInfoDto> getUploadedWorkInfoByGroup(StudentsFilterDto filterDto){
         return uploadedWorkService.getUploadedWorksInfoByGroup(filterDto);
