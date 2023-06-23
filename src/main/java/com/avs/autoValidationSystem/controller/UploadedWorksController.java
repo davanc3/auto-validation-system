@@ -1,6 +1,7 @@
 package com.avs.autoValidationSystem.controller;
 
 import com.avs.autoValidationSystem.model.dto.impl.uploadedWork.UploadedWorksInfoDto;
+import com.avs.autoValidationSystem.model.dto.impl.uploadlWorksPage.StudentsFilterDto;
 import com.avs.autoValidationSystem.model.entity.Student;
 import com.avs.autoValidationSystem.model.repository.StudentRepository;
 import com.avs.autoValidationSystem.model.service.UploadedWorkService;
@@ -29,9 +30,9 @@ public class UploadedWorksController {
     public List<UploadedWorksInfoDto> getAllUploadedWorkInfo() {
         return uploadedWorkService.getUploadedWorksInfo();
     }
-    @GetMapping("/")
+    @GetMapping("/student")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<UploadedWorksInfoDto> getStudentUploadedWorkInfo(@RequestParam("student") String studentName){
+    public List<UploadedWorksInfoDto> getUploadedWorkInfoByStudent(@RequestParam("student") String studentName){
         String[] studentSplit = studentName.split(" ");
         Student student;
         if (studentSplit.length > 2) {
@@ -40,5 +41,10 @@ public class UploadedWorksController {
             student = studentRepository.findFirstByLastNameAndName(studentSplit[0], studentSplit[1]);
         }
         return uploadedWorkService.getUploadedWorksInfoByStudent(student);
+    }
+    @GetMapping("/group")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public List<UploadedWorksInfoDto> getUploadedWorkInfoByGroup(StudentsFilterDto filterDto){
+        return uploadedWorkService.getUploadedWorksInfoByGroup(filterDto);
     }
 }
