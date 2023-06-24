@@ -27,6 +27,7 @@ public class UploadedWorkFormatter implements Formatter<UploadedWork, UploadedWo
     public UploadedWorksInfoDto getFormattedData(UploadedWork uploadedWork) {
         UploadedWorksInfoDto uploadedWorkInfoDto = new UploadedWorksInfoDto();
         uploadedWorkInfoDto.setFio(uploadedWork.getStudent().getFio());
+        uploadedWorkInfoDto.setGroup(uploadedWork.getStudent().getStudyGroup().getName());
         uploadedWorkInfoDto.setControlWork(uploadedWork.getControlWork().getName());
         uploadedWorkInfoDto.setOption(uploadedWork.getOption().getOption());
         uploadedWorkInfoDto.setTask(uploadedWork.getTask().getName());

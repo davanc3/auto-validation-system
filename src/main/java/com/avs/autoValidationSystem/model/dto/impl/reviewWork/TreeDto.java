@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class TreeDto {
     private String name;
-
+    private String type;
     private List<TreeDto> children = new ArrayList<>();
 
     public TreeDto() {

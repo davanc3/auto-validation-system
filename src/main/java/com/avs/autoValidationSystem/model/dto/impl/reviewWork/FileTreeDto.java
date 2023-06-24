@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 @Data
 public class FileTreeDto extends TreeDto {
     private long fileId;
-
+    private String type;
     public FileTreeDto() {
     }
 }

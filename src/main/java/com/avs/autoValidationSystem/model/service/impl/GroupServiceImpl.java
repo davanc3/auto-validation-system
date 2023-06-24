@@ -34,22 +34,26 @@ public class GroupServiceImpl implements GroupService {
         List<StudyGroup> studyGroups = groupRepository.findAll();
         for (StudyGroup group: studyGroups) {
             TreeDto groupTree = new TreeDto();
+            groupTree.setType("group");
             groupTree.setName(group.getName());
             List<Student> students = group.getStudents();
             if (!students.isEmpty()) {
                 for (Student student: students) {
                     TreeDto studentTree = new TreeDto();
+                    studentTree.setType("student");
                     studentTree.setName(student.getFio());
                     List<UploadedWork> uploadedWorks = student.getUploadedWorks();
                     if (!uploadedWorks.isEmpty()) {
                         for (UploadedWork uploadedWork: uploadedWorks) {
                             TreeDto workTree = new TreeDto();
                             workTree.setName(uploadedWork.getControlWork().getName());
+                            workTree.setType("controlWork");
                             List<UploadedFile> uploadedFiles = uploadedWork.getUploadedFiles();
                             if (!uploadedFiles.isEmpty()) {
                                 for (UploadedFile uploadedFile: uploadedFiles) {
                                     FileTreeDto fileTree = new FileTreeDto();
                                     fileTree.setChildren(null);
+                                    fileTree.setType("file");
                                     fileTree.setName(uploadedFile.getFileName());
                                     fileTree.setFileId(uploadedFile.getId());
                                     workTree.pushChildren(fileTree);

@@ -6,6 +6,7 @@ import lombok.Data;
 public class StudentsFilterDto {
     private String group;
     private String work;
+    private String studentFio;
 
     public StudentsFilterDto() {
     }

@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 public class UploadedWorksInfoDto implements Dto {
     private String fio;
+    private String group;
     private String controlWork;
     private int option;
     private String task;

@@ -38,6 +38,25 @@ public class StudentsServiceImpl implements StudentsService {
             }
         }
 
+        if (filterDto.getStudentFio() != null) {
+            String[] studentSplit = filterDto.getStudentFio().split(" ");
+            Student student;
+
+            if (studentSplit.length > 2) {
+                student = studentRepository.findFirstByLastNameAndNameAndSurname(studentSplit[0], studentSplit[1], studentSplit[2]);
+            } else {
+                student = studentRepository.findFirstByLastNameAndName(studentSplit[0], studentSplit[1]);
+            }
+
+            if (filterDto.getGroup() != null) {
+                if (student.getStudyGroup().getName().equals(filterDto.getGroup())) {
+                    students.add(student);
+                }
+            } else {
+                students.add(student);
+            }
+        }
+
         if (filterDto.getWork() != null) {
             ControlWork controlWork = controlWorkRepository.findFirstByName(filterDto.getWork());
 
