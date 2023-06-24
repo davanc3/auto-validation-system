@@ -30,7 +30,7 @@ public class StudentsServiceImpl implements StudentsService {
     public List<Student> getStudentsByFilter(StudentsFilterDto filterDto) {
         List<Student> students = new ArrayList<>();
 
-        if (filterDto.getGroup() != null) {
+        if (filterDto.getGroup() != null && filterDto.getStudentFio() == null) {
             StudyGroup studyGroup = groupRepository.findFirstByName(filterDto.getGroup());
 
             if (studyGroup != null) {
