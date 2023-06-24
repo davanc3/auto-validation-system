@@ -18,11 +18,9 @@ import java.util.List;
 @RequestMapping("/api/v1/uploaded-work")
 public class UploadedWorksController {
     private final UploadedWorkService uploadedWorkService;
-    private final StudentRepository studentRepository;
 
-    public UploadedWorksController(UploadedWorkService uploadedWorkService, StudentRepository studentRepository) {
+    public UploadedWorksController(UploadedWorkService uploadedWorkService) {
         this.uploadedWorkService = uploadedWorkService;
-        this.studentRepository = studentRepository;
     }
 
     @GetMapping("/all")

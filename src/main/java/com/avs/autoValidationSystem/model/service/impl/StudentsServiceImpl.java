@@ -32,12 +32,14 @@ public class StudentsServiceImpl implements StudentsService {
 
         if (filterDto.getGroup() != null && filterDto.getStudentFio() == null) {
             StudyGroup studyGroup = groupRepository.findFirstByName(filterDto.getGroup());
+
             if (studyGroup != null) {
                 students.addAll(studyGroup.getStudents());
             }
         }
 
         if(filterDto.getStudentFio() != null) {
+
             String[] studentSplit = filterDto.getStudentFio().split(" ");
             Student student;
             if (studentSplit.length > 2) {
@@ -55,6 +57,7 @@ public class StudentsServiceImpl implements StudentsService {
         }
 
         if (filterDto.getWork() != null) {
+            g
             ControlWork controlWork = controlWorkRepository.findFirstByName(filterDto.getWork());
 
             if (controlWork != null) {
