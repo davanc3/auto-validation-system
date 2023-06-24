@@ -30,7 +30,7 @@ public class StudentsServiceImpl implements StudentsService {
     public List<Student> getStudentsByFilter(StudentsFilterDto filterDto) {
         List<Student> students = new ArrayList<>();
 
-        if (filterDto.getGroup() != null && filterDto.getStudentFio() == null) {
+        if (filterDto.getGroup() != null) {
             StudyGroup studyGroup = groupRepository.findFirstByName(filterDto.getGroup());
 
             if (studyGroup != null) {
@@ -38,17 +38,18 @@ public class StudentsServiceImpl implements StudentsService {
             }
         }
 
-        if(filterDto.getStudentFio() != null) {
-
+        if (filterDto.getStudentFio() != null) {
             String[] studentSplit = filterDto.getStudentFio().split(" ");
             Student student;
+
             if (studentSplit.length > 2) {
                 student = studentRepository.findFirstByLastNameAndNameAndSurname(studentSplit[0], studentSplit[1], studentSplit[2]);
             } else {
                 student = studentRepository.findFirstByLastNameAndName(studentSplit[0], studentSplit[1]);
             }
-            if(filterDto.getGroup() != null) {
-                if(student.getStudyGroup().getName().equals(filterDto.getGroup())) {
+
+            if (filterDto.getGroup() != null) {
+                if (student.getStudyGroup().getName().equals(filterDto.getGroup())) {
                     students.add(student);
                 }
             } else {
@@ -57,7 +58,6 @@ public class StudentsServiceImpl implements StudentsService {
         }
 
         if (filterDto.getWork() != null) {
-            g
             ControlWork controlWork = controlWorkRepository.findFirstByName(filterDto.getWork());
 
             if (controlWork != null) {
