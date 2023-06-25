@@ -22,6 +22,7 @@ public class ResultWorkController {
         return resultWorkService.getResultWorkByFioAndControlWork(studentFio, controlWork);
     }
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity putTeacherEvaluation(@PathVariable("id") Long id, @RequestParam("teacherEvaluation") int teacherEvaluation) {
         resultWorkService.updateTeacherEvaluation(id, teacherEvaluation);
         return ResponseEntity.ok("ВСЕ ОКЕЙ НЕ БОИСЬ");
