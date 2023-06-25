@@ -17,4 +17,6 @@ public interface UploadedWorkRepository extends JpaRepository<UploadedWork, Long
     List<UploadedWork> findAllByStudents(@Param("students") List<Student> students);
 
     List<UploadedWork> findByStudent(Student student);
+
+    UploadedWork findByStudentAndControlWork(Student student, ControlWork controlWork);
 }

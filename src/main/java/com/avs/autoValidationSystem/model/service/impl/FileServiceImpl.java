@@ -47,14 +47,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void uploadWork(UploadWorkDto uploadWorkDto) throws IOException{
-        String[] studentFio = uploadWorkDto.getStudent().split(" ");
-        Student student;
-        if (studentFio.length > 2) {
-            student = studentRepository.findFirstByLastNameAndNameAndSurname(studentFio[0], studentFio[1], studentFio[2]);
-        } else {
-            student = studentRepository.findFirstByLastNameAndName(studentFio[0], studentFio[1]);
-        }
+    public void uploadWork(UploadWorkDto uploadWorkDto) throws IOException {
+        Student student = studentsService.getStudentByFio(uploadWorkDto.getStudent());
         ControlWork controlWork = controlWorkRepository.findFirstByName(uploadWorkDto.getWork());
         Option option = optionRepository.findFirstByOptionAndControlWorks(uploadWorkDto.getOption(),controlWork);
         Task task = taskRepository.findFirstByName(uploadWorkDto.getTask());
