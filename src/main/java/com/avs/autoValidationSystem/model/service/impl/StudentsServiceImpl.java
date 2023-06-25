@@ -39,14 +39,7 @@ public class StudentsServiceImpl implements StudentsService {
         }
 
         if (filterDto.getStudentFio() != null) {
-            String[] studentSplit = filterDto.getStudentFio().split(" ");
-            Student student;
-
-            if (studentSplit.length > 2) {
-                student = studentRepository.findFirstByLastNameAndNameAndSurname(studentSplit[0], studentSplit[1], studentSplit[2]);
-            } else {
-                student = studentRepository.findFirstByLastNameAndName(studentSplit[0], studentSplit[1]);
-            }
+            Student student = getStudentByFio(filterDto.getStudentFio());
 
             if (filterDto.getGroup() != null) {
                 if (student.getStudyGroup().getName().equals(filterDto.getGroup())) {
@@ -71,5 +64,21 @@ public class StudentsServiceImpl implements StudentsService {
     @Override
     public List<Student> getAllStudents() {
         return studentRepository.findAll(Sort.by("lastName"));
+    }
+
+    public Student getStudentByFio(String fio) {
+        String[] fioSplit = fio.split(" ");
+        Student student = null;
+        if (fioSplit.length > 2) {
+            student = studentRepository.findFirstByLastNameAndNameAndSurname(fioSplit[0], fioSplit[1], fioSplit[2]);
+        } else if(fioSplit.length == 2) {
+            student = studentRepository.findFirstByLastNameAndName(fioSplit[0], fioSplit[1]);
+        }
+
+        if (student == null) {
+            throw new IllegalArgumentException("Студент с таких ФИО не существует");
+        }
+
+        return student;
     }
 }

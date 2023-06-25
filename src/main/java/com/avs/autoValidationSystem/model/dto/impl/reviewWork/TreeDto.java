@@ -11,6 +11,7 @@ public class TreeDto {
     private String name;
     private String type;
     private List<TreeDto> children = new ArrayList<>();
+    private String student;
 
     public TreeDto() {
     }

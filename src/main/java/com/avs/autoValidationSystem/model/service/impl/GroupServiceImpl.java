@@ -42,6 +42,7 @@ public class GroupServiceImpl implements GroupService {
                     TreeDto studentTree = new TreeDto();
                     studentTree.setType("student");
                     studentTree.setName(student.getFio());
+                    studentTree.setStudent(student.getFio());
                     List<UploadedWork> uploadedWorks = student.getUploadedWorks();
                     if (!uploadedWorks.isEmpty()) {
                         for (UploadedWork uploadedWork: uploadedWorks) {
