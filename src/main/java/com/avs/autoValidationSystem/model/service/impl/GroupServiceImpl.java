@@ -42,13 +42,13 @@ public class GroupServiceImpl implements GroupService {
                     TreeDto studentTree = new TreeDto();
                     studentTree.setType("student");
                     studentTree.setName(student.getFio());
-                    studentTree.setStudent(student.getFio());
                     List<UploadedWork> uploadedWorks = student.getUploadedWorks();
                     if (!uploadedWorks.isEmpty()) {
                         for (UploadedWork uploadedWork: uploadedWorks) {
                             TreeDto workTree = new TreeDto();
                             workTree.setName(uploadedWork.getControlWork().getName());
                             workTree.setType("controlWork");
+                            workTree.setStudent(student.getFio());
                             List<UploadedFile> uploadedFiles = uploadedWork.getUploadedFiles();
                             if (!uploadedFiles.isEmpty()) {
                                 for (UploadedFile uploadedFile: uploadedFiles) {
