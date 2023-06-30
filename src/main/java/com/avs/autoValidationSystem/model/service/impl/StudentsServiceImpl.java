@@ -47,15 +47,13 @@ public class StudentsServiceImpl implements StudentsService {
             }
         }
 
-        List<Student> students = studentRepository.findByFilter(
+        return studentRepository.findByFilter(
                 group,
                 controlWork,
                 fio[0],
                 fio[1],
                 fio[2]
         );
-
-        return students;
     }
 
     public Student getStudentByFio(String fio) {
