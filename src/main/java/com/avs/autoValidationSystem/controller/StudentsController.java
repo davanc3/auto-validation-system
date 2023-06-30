@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,11 +24,5 @@ public class StudentsController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public List<Student> getStudentsByFilter(StudentsFilterDto filterDto) {
         return studentsService.getStudentsByFilter(filterDto);
-    }
-
-    @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    public List<Student> getAllStudents() {
-        return studentsService.getAllStudents();
     }
 }
