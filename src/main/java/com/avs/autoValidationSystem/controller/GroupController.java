@@ -18,8 +18,7 @@ public class GroupController {
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public String[] getAllGroups()
-    {
+    public String[] getAllGroups() {
         return groupService.getAllGroups().stream().map(StudyGroup::getName).toArray(String[]::new);
     }
 }

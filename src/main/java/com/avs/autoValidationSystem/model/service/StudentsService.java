@@ -8,5 +8,6 @@ import java.util.List;
 public interface StudentsService {
     List<Student> getStudentsByFilter(StudentsFilterDto filterDto);
     List<Student> getAllStudents();
+    List<String> getFioStudentsByFilter(StudentsFilterDto filterDto);
     Student getStudentByFio(String fio);
 }
