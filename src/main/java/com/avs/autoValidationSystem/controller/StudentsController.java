@@ -24,10 +24,4 @@ public class StudentsController {
     public List<Student> getStudentsByFilter(StudentsFilterDto filterDto) {
         return studentsService.getStudentsByFilter(filterDto);
     }
-
-    @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-    public List<Student> getAllStudents() {
-        return studentsService.getAllStudents();
-    }
 }

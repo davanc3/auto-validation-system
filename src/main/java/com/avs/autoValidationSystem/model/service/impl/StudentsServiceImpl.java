@@ -28,42 +28,34 @@ public class StudentsServiceImpl implements StudentsService {
 
     @Override
     public List<Student> getStudentsByFilter(StudentsFilterDto filterDto) {
-        List<Student> students = new ArrayList<>();
+        StudyGroup group = null;
+        ControlWork controlWork = null;
+        String[] fio = {null, null, null};
 
-        if (filterDto.getGroup() != null && filterDto.getStudentFio() == null) {
-            StudyGroup studyGroup = groupRepository.findFirstByName(filterDto.getGroup());
-
-            if (studyGroup != null) {
-                students.addAll(studyGroup.getStudents());
-            }
-        }
-
-        if (filterDto.getStudentFio() != null) {
-            Student student = getStudentByFio(filterDto.getStudentFio());
-
-            if (filterDto.getGroup() != null) {
-                if (student.getStudyGroup().getName().equals(filterDto.getGroup())) {
-                    students.add(student);
-                }
-            } else {
-                students.add(student);
-            }
+        if (filterDto.getGroup() != null) {
+            group = groupRepository.findFirstByName(filterDto.getGroup());
         }
 
         if (filterDto.getWork() != null) {
-            ControlWork controlWork = controlWorkRepository.findFirstByName(filterDto.getWork());
+            controlWork = controlWorkRepository.findFirstByName(filterDto.getWork());
+        }
 
-            if (controlWork != null) {
-                students.addAll(controlWork.getStudents());
+        if (filterDto.getStudentFio() != null) {
+            String[] fioSplit = filterDto.getStudentFio().split(" ");
+            for (int i = 0; i < fioSplit.length; i++) {
+                fio[i] = fioSplit[i];
             }
         }
 
-        return students;
-    }
+        List<Student> students = studentRepository.findByFilter(
+                group,
+                controlWork,
+                fio[0],
+                fio[1],
+                fio[2]
+        );
 
-    @Override
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll(Sort.by("lastName"));
+        return students;
     }
 
     public Student getStudentByFio(String fio) {
