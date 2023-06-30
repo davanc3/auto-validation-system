@@ -3,6 +3,7 @@ package com.avs.autoValidationSystem.model.repository;
 import com.avs.autoValidationSystem.model.entity.ControlWork;
 import com.avs.autoValidationSystem.model.entity.Student;
 import com.avs.autoValidationSystem.model.entity.StudyGroup;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,5 +23,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
                                @Param("controlWork") ControlWork controlWork,
                                @Param("lastname") String lastname,
                                @Param("name") String name,
-                               @Param("surname") String surname);
+                               @Param("surname") String surname,
+                               Sort sort);
 }

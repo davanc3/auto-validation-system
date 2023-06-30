@@ -52,7 +52,8 @@ public class StudentsServiceImpl implements StudentsService {
                 controlWork,
                 fio[0],
                 fio[1],
-                fio[2]
+                fio[2],
+                Sort.by("lastName")
         );
     }
 
