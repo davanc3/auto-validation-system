@@ -24,4 +24,10 @@ public class StudentsController {
     public List<Student> getStudentsByFilter(StudentsFilterDto filterDto) {
         return studentsService.getStudentsByFilter(filterDto);
     }
+
+    @GetMapping("/fio")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public List<String> getFioStudents(StudentsFilterDto filterDto) {
+        return studentsService.getFioStudentsByFilter(filterDto);
+    }
 }

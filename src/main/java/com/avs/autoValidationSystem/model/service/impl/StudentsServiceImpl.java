@@ -56,6 +56,11 @@ public class StudentsServiceImpl implements StudentsService {
         );
     }
 
+    @Override
+    public List<String> getFioStudentsByFilter(StudentsFilterDto filterDto) {
+        return studentsToStudentsFio(getStudentsByFilter(filterDto));
+    }
+
     public Student getStudentByFio(String fio) {
         String[] fioSplit = fio.split(" ");
         Student student = null;
@@ -70,5 +75,13 @@ public class StudentsServiceImpl implements StudentsService {
         }
 
         return student;
+    }
+
+    private List<String> studentsToStudentsFio(List<Student> students) {
+        List<String> studentFio = new ArrayList<>();
+        for (Student student : students) {
+            studentFio.add(student.getFio());
+        }
+        return studentFio;
     }
 }
