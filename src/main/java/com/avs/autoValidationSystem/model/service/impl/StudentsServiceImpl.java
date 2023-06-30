@@ -55,18 +55,6 @@ public class StudentsServiceImpl implements StudentsService {
                 fio[2]
         );
 
-//        if (filterDto.getStudentFio() != null) {
-//            Student student = getStudentByFio(filterDto.getStudentFio());
-//
-//            if (filterDto.getGroup() != null) {
-//                if (student.getStudyGroup().getName().equals(filterDto.getGroup())) {
-//                    students.add(student);
-//                }
-//            } else {
-//                students.add(student);
-//            }
-//        }
-
         return students;
     }
 
