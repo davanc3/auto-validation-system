@@ -7,7 +7,9 @@ import com.avs.autoValidationSystem.model.repository.GroupRepository;
 import com.avs.autoValidationSystem.model.service.ControlWorkService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -19,8 +21,8 @@ public class ControlWorkServiceImpl implements ControlWorkService {
     }
 
     @Override
-    public Set<ControlWork> getControlWorksByFilter(StudentsFilterDto filterDto) {
-        Set<ControlWork> controlWorks = new HashSet<>();
+    public List<ControlWork> getControlWorksByFilter(StudentsFilterDto filterDto) {
+        List<ControlWork> controlWorks = new ArrayList<>();
 
         if (filterDto.getGroup() != null) {
             StudyGroup studyGroup = groupRepository.findFirstByName(filterDto.getGroup());
