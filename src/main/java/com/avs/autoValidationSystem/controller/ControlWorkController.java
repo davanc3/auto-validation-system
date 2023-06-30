@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -21,7 +22,7 @@ public class ControlWorkController {
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public Set<ControlWork> getControlWorksByFilter(StudentsFilterDto filterDto) {
+    public List<ControlWork> getControlWorksByFilter(StudentsFilterDto filterDto) {
         return controlWorkService.getControlWorksByFilter(filterDto);
     }
 }
